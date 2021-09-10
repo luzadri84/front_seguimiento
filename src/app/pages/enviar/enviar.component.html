@@ -1,0 +1,58 @@
+<div class="row animated fadeIn">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div class="col-md-12" id="divForm">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="text-align: justify;">NOTA: El presionar el bot&oacute;n Guardar el sistema validar&aacute; la informaci&oacute;n ingresada en los formularios Parte A, Parte B y los documentos obligatorios dependiendo de la l&iacute;nea seleccionada.</h4>
+                <hr>
+                <div class='row' *ngIf="errores.length > 0">
+                    <div class="col-sm-12">
+                        <h4 style="text-align: justify;"><b>Diligencie los siguientes campos o secciones para realizar el envío del proyecto.</b></h4>
+                        <hr/>
+                        <ul>
+                            <li *ngFor="let item of errores; let i = index">
+                                {{item.descripcion}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <br /><br />
+                <div class='row'>
+                    <div class="col-sm-12 text-center">
+                        <button class="btn btn-primary" type="button" (click)="enviar()">Enviar al Ministerio</button>
+                        &nbsp;
+                        <a [routerLink]="['/formulario']" [queryParams]="{proId:proId}" *ngIf="existeProyecto === true">
+                            <button class="btn btn-primary" *ngIf="existeProyecto === true"
+                                type="button">Ir a formulario A</button>
+                        </a>
+                        &nbsp;
+                        <a [routerLink]="['/formularioB']" [queryParams]="{proId:proId}" *ngIf="existeProyecto === true">
+                            <button class="btn btn-primary" *ngIf="existeProyecto === true"
+                                type="button">Ir a formulario B</button>
+                        </a>
+                        &nbsp;
+                        <a [routerLink]="['/documentos']" [queryParams]="{proId:proId}" *ngIf="existeProyecto === true">
+                            <button class="btn btn-primary" *ngIf="existeProyecto === true"
+                                type="button">Ir a documentos</button>
+                        </a>
+                        &nbsp;
+                        <a [routerLink]="['/dashboard']">
+                            <button class="btn btn-primary"
+                                type="button">Cancelar</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,479 @@
+<div class="row animated fadeIn">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="text-align: justify;">Proponente</h4><br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align: left;">
+                        <b>1. IDENTIFICACI&Oacute;N DEL PROPONENTE.</b>
+                    </div>
+                    
+                </div>
+                <hr>
+                <form ngNativeValidate #formCP="ngForm" (ngSubmit)="crearProponente(formCP.valid)">
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Raz&oacute;n social (Nombre de la organizaci&oacute;n o entidad que presenta el proyecto
+                            seg&uacute;n como aparece registrada en el RUT)
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proRazonSocial" type="text" class="form-control" placeholder="Razón social"
+                                [(ngModel)]="proponente.proRazonSocial" required [maxlength]="500">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proRazonSocial !== null ? proponente.proRazonSocial.length : 0) + '/' + 500 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            NIT (N&uacute;mero de identificaci&oacute;n tributaria, como aparece registrada en el RUT)
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proNit" type="text" class="form-control" [(ngModel)]="proponente.proNit"
+                                required>
+                        </div>
+                    </div>
+                    <br />
+                    <!-- <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Tipo entidad proponente
+                        </div>
+                        <div class="col-md-8">
+                            <input name="tipNombre" type="text" class="form-control"
+                                [(ngModel)]="proponente.tip.tipNombre" required>
+                        </div>
+                    </div> -->
+
+
+                   <div class="row">
+                        <div class="col-md-4" style="text-align: justify;"> seleccione el tipo entidad proponente:
+                            
+                        </div>
+                        <div class="col-md-8">
+                            <select name="tipIdEntidad" class="form-control" [(ngModel)]="proponente.tipId" aria-describedby="tipIdEntidadHelp" 
+                                required>
+                                <option *ngFor="let item of tipoEntidadProponente" [ngValue]="item.tipId">
+                                    {{item.tipNombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Nombres del representante legal (Tal como aparece en el documento de identidad)
+                        </div>
+                        <div class="col-md-4">
+                            <input name="proPrimerNombreRepLegal" type="text" class="form-control"
+                                placeholder="Primer nombre"
+                                [(ngModel)]="proponente.proPrimerNombreRepLegal" required [maxlength]="100"> 
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proPrimerNombreRepLegal !== null ? proponente.proPrimerNombreRepLegal.length : 0) + '/' + 100 }}</label> -->
+                        </div>
+                        <div class="col-md-4">
+                            <input name="proSegundoNombreRepLegal" type="text" class="form-control"
+                                placeholder="Segundo nombre"
+                                [(ngModel)]="proponente.proSegundoNombreRepLegal" [maxlength]="100"> 
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proSegundoNombreRepLegal !== null ? proponente.proSegundoNombreRepLegal.length : 0) + '/' + 100 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Apellidos del representante legal (Tal como aparece en el documento de identidad)
+                        </div>
+                        <div class="col-md-4">
+                            <input name="proPrimerApellidoRepLegal" type="text" class="form-control"
+                                placeholder="Primer apellido"
+                                [(ngModel)]="proponente.proPrimerApellidoRepLegal" required [maxlength]="100"> 
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proPrimerApellidoRepLegal !== null ? proponente.proPrimerApellidoRepLegal.length : 0) + '/' + 100 }}</label> -->
+                        </div>
+                        <div class="col-md-4">
+                            <input name="proSegundoApellidoRepLegal" type="text" class="form-control"
+                                placeholder="Segundo apellido"
+                                [(ngModel)]="proponente.proSegundoApellidoRepLegal" [maxlength]="100"> 
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proSegundoApellidoRepLegal !== null ? proponente.proSegundoApellidoRepLegal.length : 0) + '/' + 100 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            N&uacute;mero documento identidad
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proDocumentoIdentidadRepresentanteLegal" type="text" class="form-control"
+                                placeholder="Número documento identidad"
+                                [(ngModel)]="proponente.proDocumentoIdentidadRepresentanteLegal" required [maxlength]="20">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proDocumentoIdentidadRepresentanteLegal !== null ? proponente.proDocumentoIdentidadRepresentanteLegal.length : 0) + '/' + 20 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Departamento expedici&oacute;n documento
+                        </div>
+                        <div class="col-md-8">
+                            <select name="proLugarExpDocRepLegDep" class="form-control"
+                                [(ngModel)]="proponente.proLugarExpDocRepLegDep" required
+                                (change)="changeDepartamentoExpRepLeg()">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listDepartamentos" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Municipio expedici&oacute;n documento
+                        </div>
+                        <div class="col-md-8">
+                            <select name="proLugarExpedicionDocumentoRepresentanteLegal" class="form-control"
+                                [(ngModel)]="proponente.proLugarExpedicionDocumentoRepresentanteLegal" required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listMunicipios" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Direcci&oacute;n de la entidad u organizaci&oacute;n proponente
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proDirtrad" type="text" class="form-control"
+                                placeholder="Dirección de la entidad" [(ngModel)]="proponente.proDirtrad" required [maxlength]="120">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proDirtrad !== null ? proponente.proDirtrad.length : 0) + '/' + 120 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Barrio o comuna
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proBarrioComuna" type="text" class="form-control" placeholder="Barrio o comuna"
+                                [(ngModel)]="proponente.proBarrioComuna" required [maxlength]="500">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proBarrioComuna !== null ? proponente.proBarrioComuna.length : 0) + '/' + 500 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Departamento ubicaci&oacute;n proponente
+                        </div>
+                        <div class="col-md-8">
+                            <select name="zonDepId" class="form-control" [(ngModel)]="proponente.zonDepId" required
+                                (change)="changeDepartamentoPro()">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listDepartamentosPro" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Municipio ubicaci&oacute;n proponente
+                        </div>
+                        <div class="col-md-8">
+                            <select name="zonId" class="form-control" [(ngModel)]="proponente.zonId" required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listMunicipiosPro" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Tel&eacute;fonos
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proTelefonosRepresentanteLegal" type="text" class="form-control"
+                                placeholder="Teléfonos" [(ngModel)]="proponente.proTelefonosRepresentanteLegal"
+                                required [maxlength]="50">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proTelefonosRepresentanteLegal !== null ? proponente.proTelefonosRepresentanteLegal.length : 0) + '/' + 50 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Celular del representante legal
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proTelefonoCelular" type="text" class="form-control"
+                                placeholder="Celular del representante legal"
+                                [(ngModel)]="proponente.proTelefonoCelular" required [maxlength]="50">
+                            <!-- <label class="textMax">{{'Carácteres ingresados ' + (proponente.proTelefonoCelular !== null ? proponente.proTelefonoCelular.length : 0) + '/' + 50 }}</label> -->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            <b>Correo electrónico de la organización proponente o del representante legal.</b><em>Este
+                                es el principal medio para la remisión de documentos, razón por la cual es de
+                                carácter</em> <b>obligatorio y de consulta permanente</b>
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proCorreoElectronicoRepresentanteLegal" type="email" class="form-control"
+                                placeholder="Correo electrónico" 
+                                [(ngModel)]="proponente.proCorreoElectronicoRepresentanteLegal" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Confirmar correo electrónico de la organización proponente o del representante legal
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proConfirmarCorreo" type="email" class="form-control"
+                                placeholder="Confirmar correo electrónico" [(ngModel)]="proponente.proConfirmarCorreo"
+                                required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <!--
+                    <hr> <b>PERSONA ENCARGADA DEL PROYECTO</b>
+                    <hr><br />
+                    Persona encargada el proyecto <b>(Esta persona no solo se debe encargar de la formulación del
+                        proyecto, sino también es quien estará al frente de su ejecución y seguimiento, No destine
+                        recursos económicos para asesores externos que realicen la orientación, formulación o
+                        presentación de proyectos a esta convocatoria). Señale:</b>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Nombre completo de la persona encargada del proyecto
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proPersonaEncargadaProyecto" type="text" class="form-control"
+                                placeholder="Persona encargada del proyecto"
+                                [(ngModel)]="proyecto.proPersonaEncargadaProyecto" required [maxlength]="100">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proyecto.proPersonaEncargadaProyecto !== null ? proyecto.proPersonaEncargadaProyecto.length : 0) + '/' + 100 }}</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Tipo de vinculación a la entidad proponente (planta, contrato de prestación de servicios,
+                            contrato a término indefinido o término fijo, entre otros)
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proTipoVinculacionPersona" type="text" class="form-control"
+                                placeholder="Tipo de vinculación a la entidad proponente"
+                                [(ngModel)]="proponente.proTipoVinculacionPersona" required [maxlength]="100">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proponente.proTipoVinculacionPersona !== null ? proponente.proTipoVinculacionPersona.length : 0) + '/' + 100 }}</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Números teléfonicos de la persona encargada
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proTelefonosPersonaEncargadaProyecto" type="text" class="form-control"
+                                placeholder="Números teléfonicos de la persona encargada"
+                                [(ngModel)]="proyecto.proTelefonosPersonaEncargadaProyecto" required [maxlength]="50">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proyecto.proTelefonosPersonaEncargadaProyecto !== null ? proyecto.proTelefonosPersonaEncargadaProyecto.length : 0) + '/' + 50 }}</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Correo electrónico de la persona encargada <b>obligatorio y de consulta permanente</b>
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proCorreoPersonaEncargada" type="email" class="form-control"
+                                placeholder="Correo electrónico de la persona encarga"
+                                [(ngModel)]="proyecto.proCorreoPersonaEncargada" required [maxlength]="200">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proyecto.proCorreoPersonaEncargada !== null ? proyecto.proCorreoPersonaEncargada.length : 0) + '/' + 200 }}</label>
+                        </div>
+                    </div>
+                    <b>Nota: Si el proyecto presentando por la organización o entidad que usted representa, cumple todos
+                        los requistos de la convocatoria y es apoyado, por favor actualice los datos de su organización
+                        si tiene algún cambio y verifique que la cuenta de ahorros o corriente se encuentre activa para
+                        poder realizar la transferencia de los pagos </b>
+                    <br />
+                     <hr>
+                    <b>2. INFORMACIÓN PARA EL PAGO ELECTRÓNICO (OBLIGATORIO)</b>
+                    <hr>
+                    <b>La información que suministre en los siguientes campos debe ser exactamente igual a la
+                        suministrada en la certificación expedida por la entidad bancaria donde la organización tiene la
+                        cuenta corrienta o de ahorros para así poder realizar la transferencia.</b><br /><br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Entidad bancaria
+                        </div>
+                        <div class="col-md-8">
+                            <select name="entId" class="form-control" [(ngModel)]="proyecto.entId" required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listEntFinancieras" [ngValue]="item.entId">
+                                    {{item.entNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Departamento entidad bancaria
+                        </div>
+                        <div class="col-md-8">
+                            <select name="zonIdEntidadBancariaDep" class="form-control"
+                                [(ngModel)]="proyecto.zonIdEntidadBancariaDep" required
+                                (change)="changeDepartamentoBanco()">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listDepartamentosBanco" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Municipio entidad bancaria
+                        </div>
+                        <div class="col-md-8">
+                            <select name="zonIdEntidadBancaria" class="form-control"
+                                [(ngModel)]="proyecto.zonIdEntidadBancaria" required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listMunicipiosBanco" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Tipo de cuenta
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proTipoCuenta" id="proTipoCuenta1" #proTipoCuenta
+                                        class="form-check-input" [(ngModel)]="proyecto.proTipoCuenta" value="A" />
+                                    <label for="proTipoCuenta1">&nbsp;Cuenta de ahorro&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proTipoCuenta" id="proTipoCuenta2" #proTipoCuenta
+                                        class="form-check-input" [(ngModel)]="proyecto.proTipoCuenta" value="C" />
+                                    <label for="proTipoCuenta2">&nbsp;Cuenta corriente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Número de la cuenta
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proNumeroCuenta" type="text" class="form-control"
+                                placeholder="Número de la cuenta" [(ngModel)]="proyecto.proNumeroCuenta" required [maxlength]="50">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proyecto.proNumeroCuenta !== null ? proyecto.proNumeroCuenta.length : 0) + '/' + 50 }}</label>
+                        </div>
+                    </div>
+                    <hr> <b>3. RESPONSABILIDADES TRIBUTARIAS (Señale, según sea el caso)</b>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Régimen tributario
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proRegimenTributario" id="proRegimenTributario1"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proRegimenTributario" value="O" />
+                                    <label for="proRegimenTributario1">&nbsp;Régimen ordinario&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proRegimenTributario" id="proRegimenTributario2"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proRegimenTributario" value="S" />
+                                    <label for="proRegimenTributario2">&nbsp;Régimen Simplificado&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proRegimenTributario" id="proRegimenTributario3"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proRegimenTributario" value="G" />
+                                    <label for="proRegimenTributario3">&nbsp;Gran contribuyente&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proRegimenTributario" id="proRegimenTributario4"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proRegimenTributario" value="E" />
+                                    <label for="proRegimenTributario4">&nbsp;Régimen Especial&nbsp;&nbsp;</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Responsable del IVA
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proResponsableIva" id="proResponsableIva1"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proResponsableIva" value="S" />
+                                    <label for="proResponsableIva1">&nbsp;SI&nbsp;&nbsp;</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="proResponsableIva" id="proResponsableIva2"
+                                        #proRegimenTributario class="form-check-input"
+                                        [(ngModel)]="proponente.proResponsableIva" value="N" />
+                                    <label for="proResponsableIva2">&nbsp;NO&nbsp;&nbsp;</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            ICA: Tarifca correspondiente a la actividad económica:
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proTarifaIca" type="text" class="form-control" placeholder="Tarifica ICA"
+                                [(ngModel)]="proponente.proTarifaIca" required [maxlength]="10">
+                            <label class="textMax">{{'Carácteres ingresados ' + (proponente.proTarifaIca !== null ? proponente.proTarifaIca.length : 0) + '/' + 10 }}</label>
+                        </div>
+                    </div>
+                    Si el proyecto presentado resulta favorecido, de acuerdo a las condiciones de la convocatoria y la
+                    entidad apoyada tiene responsabilidad de expedir factura, según lo consignado en el RUT, es
+                    necesario que remita la factura.
+                    <br /><br /> -->
+                    <div class='row' id="divForm">
+                        <div class="col-sm-12 text-center">
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                            &nbsp;
+                            <a [routerLink]="['/resultados']">
+                                <button class="btn btn-primary"
+                                    type="button">Cancelar</button>
+                            </a>
+                            &nbsp;
+                            <a [routerLink]="['/formularioB']" [queryParams]="{proId:proId}" *ngIf="existeProyecto === true">
+                                <button class="btn btn-primary" *ngIf="existeProyecto === true"
+                                    type="button">Continuar formulario B</button>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

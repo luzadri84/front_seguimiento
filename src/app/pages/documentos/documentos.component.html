@@ -1,0 +1,54 @@
+<div class="row animated fadeIn">
+    <div class="row" style="padding: 1%;">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="text-align: justify;">Adjunte los documentos solicitados a continuación, recuerde que solo se permiten archivos con las siguientes extensiones (.jpg, .jpeg, .jpg, .png, .pdf, .doc, .docx) y el peso no puede ser mayor a 20MB.</h4>
+                <hr>
+                <dx-data-grid id="gridContainer" [dataSource]="appDocumentosTipoEntidades" keyExpr="tdoId"
+                    [wordWrapEnabled]="true" [showBorders]="true" [showColumnLines]="true" [showRowLines]="true"
+                    [showBorders]="true" [rowAlternationEnabled]="false" [allowColumnReordering]="false"
+                    [allowColumnResizing]="false">
+                    <dxo-paging [enabled]="false"></dxo-paging>
+                    <dxi-column dataField="tdoNombre" caption="Nombre" [allowSorting]="false">
+                    </dxi-column>
+                    <dxi-column dataField="tdoObservaciones" caption="Observación" [allowSorting]="false">
+                    </dxi-column>
+                    <dxi-column dataField="tdoObservaciones" caption="Cargue" [allowSorting]="false"
+                        cellTemplate="cellTemplateItem">
+                        <div *dxTemplate="let datosItem of 'cellTemplateItem'">
+                            <label id="label" for="poblacion">¿Número de páginas del documento?</label>&nbsp;
+                            <input name="numPaginas" type="number"  class="form-control" style="width: 70px;" [(ngModel)]="datosItem.data.numeroActualPaginas"  minlength="1"  maxlength="3">
+                            <div class="main-block">
+                                <div class="file-uploader-block" *ngIf="datosItem.data.numeroActualPaginas > 0">
+                                    <dx-file-uploader (onUploaded)="changeFile()" [(uploadUrl)]="uploadUrl"
+                                        [uploadHeaders]="headers" [multiple]="false" uploadMode="instantly"
+                                        (onValueChanged)="onValueChanged($event, datosItem.data.tdoId, datosItem.data.tdvNombre, datosItem.data.numeroActualPaginas)"
+                                        labelText="" selectButtonText="Seleccione el archivo" name="file"
+                                        [allowedFileExtensions]="['.jpg', '.jpeg', '.jpg', '.png', '.pdf', '.doc', '.docx']"
+                                        [maxFileSize]="1048576" invalidFileExtensionMessage="Extensión invalida"
+                                        invalidMaxFileSizeMessage="Excede el máximo permitido" uploadFailedMessage = "Hubo una falla en el cargue " >
+                                    </dx-file-uploader>
+                                </div>
+                            </div>
+                            <hr>
+                            <div [style.display]="ocultar(datosItem.data.tdvRutaAdjunto)">
+                                <a href="javascript:void(0);" (click)="descargar(datosItem.data.tdvNombre);">
+                                    <dx-button icon="download" text="">
+                                    </dx-button>
+                                    {{datosItem.data.tdvNombre}}
+                                </a>
+                            </div>
+                            <div [style.display]="ocultar(datosItem.data.tdvRutaAdjunto)">
+                                <label>
+                                    Cantidad de hojas: {{datosItem.data.tdvNumeroPaginas}}
+                                </label>
+                            </div>
+                        </div>
+                    </dxi-column>
+                    <dxi-column dataField="tdoNs" caption="Tipo">
+                    </dxi-column>
+                </dx-data-grid>
+            </div>
+        </div>    
+    </div>
+</div>

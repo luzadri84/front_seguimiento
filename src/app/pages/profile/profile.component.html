@@ -1,0 +1,49 @@
+<div class="row animated fadeIn">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfil del usuario: {{role}}</h4>
+                <h6 class="card-subtitle">Datos básicos del usuario</h6>
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar(f.value)" class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input [ngModel]="this.usuario.cuentausuariousuario" name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Correo electrónico actual</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [ngModel]="this.usuario.cuentausuarioemail" name="email" type="email" class="form-control" placeholder="Correo del usuario" required disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmailNuevo">Correo electrónico nuevo</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [ngModel]="this.usuario.cuentausuarioemailnuevo" name="emailNuevo" type="email" class="form-control" placeholder="Correo electrónico nuevo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmailNuevoConf">Confirmar correo electrónico nuevo</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [ngModel]="this.usuario.cuentausuarioemailnuevoconf" name="emailNuevoConf" type="email" class="form-control" placeholder="Confirmar correo electrónico nuevo" required>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-sm-12 text-center">
+                            <button class="btn btn-primary btn-md" *ngIf="envioPro" type="submit">Guardar</button>
+                            &nbsp;
+                            <a [routerLink]="['/dashboard']">
+                                <button class="btn btn-primary btn-md" type="button">Cancelar</button>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,335 @@
+<div class="sidebar-fixed topnav-fixed">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div id="wrapper" class="wrapper" style="background-color: #fff;">
+        <header class="he_header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-sm-2 col-4 he_logo">
+                        <a href="https://www.gov.co">
+                            <img src="assets/images/front/logos/logo_header.png" alt="logo">
+                        </a>
+                    </div>
+                    <div class="col-lg-11 col-sm-10 col-8 he_menu">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-5">
+                                <p class="screen-lg">El Estado no tiene porqué ser aburrido ¡conoce a gov.co!</p>
+                                <p class="screen-md">¿Sabes que es GOV.CO?</p>
+                                <p class="screen-sm">¿Sabes que es GOV.CO? Conócelo aquí</p>
+                            </div>
+                            <div class="col-lg-6 col-md-7">
+                                <ul class="nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="https://www.gov.co/tramites-y-servicios"
+                                            target="_blank">Trámites y servicios</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="https://www.gov.co/participacion"
+                                            target="_blank">Participación</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="https://www.gov.co/informacion"
+                                            target="_blank">Entidades</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="main-content-wrapper"
+            style="padding-right: 0px; padding-left: 0px; padding-bottom: 0px; padding-top: 0px;">
+            <div class="float-left left d-flex">
+                <div class="pt-3" style="padding-left: 5px;">
+                    <img src="assets/images/PN-concertacion-cultural_1.png" style="width: 40%;">
+                </div>
+                <div class="pt-2">
+                    <img src="assets/images/mincultura.png" style="width: 40%;">
+                </div>
+                <!-- navigation -->
+                <div class="pt-2">
+                    <a [routerLink]="['/home']">
+                        <button class="btn btn-primary my-2 my-sm-0 m-5 float-left" type="button">Inicio</button>
+                    </a>
+                </div>
+                <div class="pt-5">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <!-- ./navigation -->
+            </div>
+        </div>
+        
+        <div class="container-fluid areas " id="divForm">
+            <div class='row'>
+                <div class="col-12">&nbsp; </div>
+                <div class="col-12" style="text-align: center;">
+                    <h2>Registrar un proponente  para crear un proyecto
+                    </h2>
+                </div>
+            </div>
+           
+            <div class='row'>
+                <div class="col-12">&nbsp; </div>
+            </div>
+
+
+
+
+
+<!-- <dx-button
+        stylingMode="contained"
+        type="warning"
+        [width]="150"
+        text="Nuevo"
+        (onClick)="showPopN()">
+</dx-button>
+        <dx-popup
+        [width]="750"
+        [height]="500"
+        [showTitle]="true"
+        title="Nuevo"
+        [dragEnabled]="false"
+        [closeOnOutsideClick]="true"
+        [(visible)]="popupVisibleN">
+        
+
+                <div >
+                    <app-create></app-create>
+                    
+                </div>
+
+
+        </dx-popup> -->
+
+        
+
+        <!-- <app-crear-componente></app-crear-componente> -->
+        
+        <!-- <button (click)="enviarMensaje()">Saludar hijo</button> -->
+
+        <div class='row' id="divForm">
+            <div class="col-sm-12 text-center">
+                
+                <a [routerLink]="['/formulario']">
+                    <button class="btn btn-primary" 
+                        type="button">Nuevo</button>
+                </a>
+            </div>
+        </div>
+
+        <div class='row' id="divForm">
+            <div class="col-sm-12 text-center">
+                
+                <a [routerLink]="['/seguimiento']">
+                    <button class="btn btn-primary" 
+                        type="button">Seguimiento</button>
+                </a>
+            </div>
+        </div>
+<br/>
+<br/>
+
+ <dx-data-grid id="gridContainer" [dataSource]="resultadoConvocatoria" keyExpr="prO_ID"
+        [allowColumnResizing]="true"     [columnAutoWidth]="true"     
+        [allowColumnReordering]="true"   [showBorders]="true">
+        <dxo-paging [enabled]="true" [pageSize]="5"></dxo-paging>
+        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+        <dxo-pager 
+            [showPageSizeSelector]="true"
+            [allowedPageSizes]="[5, 10, 20]"
+            [showInfo]="true">
+        </dxo-pager>
+        <dxo-filter-row  [visible]="true"  [applyFilter]="currentFilter"></dxo-filter-row> 
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-search-panel [visible]="true"></dxo-search-panel>
+
+                <dxi-column  dataField="Editar"  [width]="100" caption="Editar" alignment="center"  cellTemplate="cellTemplate">
+                    <div *dxTemplate="let data of 'cellTemplate'">
+                        <div>
+                            <ul>
+                                <li>
+                                    <a [routerLink]="['/formulario']" [queryParams]="{proId:data.data.prO_ID}">
+                                        <button class="btn btn-primary"
+                                            type="button">{{data.data.prO_ID}}
+                                        </button>
+                                    </a>
+                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </dxi-column>
+                <dxi-column  dataField="Seguimiento"  [width]="100" caption="Seguimiento" alignment="center"  cellTemplate="cellTemplate">
+                    <div *dxTemplate="let data of 'cellTemplate'">
+                        <div>
+                            <ul>
+                                <li>
+                                    <a [routerLink]="['/seguimiento']" [queryParams]="{proId:data.data.prO_ID}">
+                                        <button class="btn btn-primary"
+                                            type="button">{{data.data.prO_ID}}
+                                        </button>
+                                    </a>
+                                 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </dxi-column>
+                        
+                <dxi-column  dataField="detalle"  [width]="100" caption="Detalle" alignment="center"  cellTemplate="cellTemplate30" >
+                                            
+                                            
+                <div *dxTemplate="let data of 'cellTemplate30'">
+                    
+                    <dx-button
+                    stylingMode="contained"
+                    type="warning"
+                    [width]="50"
+                    icon = "find"
+                    (onClick)="showPop()">
+                    </dx-button>
+                    <dx-popup
+                    [width]="750"
+                    [height]="500"
+                    [showTitle]="true"
+                    title="Detalle del proyecto"
+                    [dragEnabled]="false"
+                    [closeOnOutsideClick]="true"
+                    [(visible)]="popupVisible">
+                    
+
+                            <div >
+                                <p><b>Radicación: </b>
+                                    <span>{{data.data.prO_NUMERO_RADICACION}}</span>
+                                </p>
+                                <p>
+                                    <b>Línea:  </b>
+                                    <span>{{data.data.liN_NOMBRE}}</span>
+                                </p>
+                                <p>
+                                    <b>Área: </b>
+                                    <span>{{data.data.area}}</span>
+                                </p>
+                                    <p>
+                                        <b>Fecha de Inicio: </b>
+                                    <span>{{data.data.prO_FECHA_INICIAL}}</span>
+                                </p>
+                                    <p>
+                                        <b>Fecha final:  </b>
+                                    <span>{{data.data.prO_FECHA_FINAL}}</span>
+                                </p>
+                                    <p>
+                                        <b>Entidad Responsable: </b> 
+                                    <span>{{data.data.prO_RAZON_SOCIAL}}</span>
+                                </p>
+                                    <p>
+                                        <b>Estado:  </b>
+                                    <span>{{data.data.prO_ESTADO}}</span>
+                                </p>
+                                <p>
+                                    <b>Ubicación: </b>
+                                    <span>{{data.data.ubicacion}}</span>
+                                </p>
+                                
+                            </div>
+
+
+                    </dx-popup>
+                </div>
+
+                </dxi-column>
+                <dxi-column dataField="prO_NUMERO_RADICACION" caption="Nro Radicación"></dxi-column>
+                <dxi-column dataField="prO_NOMBRE" caption="Proyecto"></dxi-column>
+                <dxi-column dataField="prO_RAZON_SOCIAL" caption="Entidad Responsable"></dxi-column>
+                <dxi-column dataField="prO_ESTADO" caption="Estado"></dxi-column>
+                <dxi-column dataField="PRO_OBSERVACIONES" caption="Observaciones del proyecto"></dxi-column>
+                
+
+</dx-data-grid>     
+
+</div>
+    </div>
+
+    <footer class="he_footer ">
+        <div class="container ">
+            <div class="row ">
+                <div class="col-xl-2 col-lg-3 split screen-lg logos">
+                    <div class="logo ">
+                        <a href="https://www.gov.co ">
+                            <img src="assets/images/front/logos/logo_footer.png"
+                                alt="logo ">
+                        </a>
+                    </div>
+                    <div class="logo_co ">
+                        <a href="https://www.colombia.co ">
+                            <img src="assets/images/front/logos/logo_co_footer.png"
+                                alt="logo co ">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-5 split ">
+                    <h4 style="color: white;">Ministerio de Cultura</h4>
+                    <p>Dirección: 8 No. 8 - 55</p>
+                    <p>Bogotá D.C. - Colombia <br> Horario de Atención: Lunes a Viernes 08:00 am - 05:00 pm. </p>
+                    <ul class="he_footer_redes ">
+                        <a href="http://www.youtube.com/user/Mincultura?feature=mhw4" target="_blank">
+                            <li>
+                                <i class="fa fa-youtube fa-circulo" aria-hidden="true"></i>
+                                <div class="fa_text">Youtube</div>
+                            </li>
+                        </a>
+                        <a href="https://twitter.com/mincultura" target="_blank">
+                            <li>
+                                <i class="fa fa-twitter fa-circulo " aria-hidden="true"></i>
+                                <div class="fa_text">Twitter</div>
+                            </li>
+                        </a>
+                        <a href="https://www.instagram.com/mincultura/" target="_blank">
+                            <li>
+                                <i class="fa fa-instagram fa-circulo " aria-hidden="true"></i>
+                                <div class="fa_text">Instagram</div>
+                            </li>
+                        </a>
+                        <a href="https://www.facebook.com/MinisterioCultura" target="_blank">
+                            <li>
+                                <i class="fa fa-facebook fa-circulo" aria-hidden="true"></i>
+                                <div class="fa_text">Facebook</div>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+                <div class="col-lg-4 no-split ">
+                    <h4 style="color: white;"><i class="fa fa-phone " aria-hidden="true "></i> Contacto</h4>
+                    <p> Teléfono Conmutador: +57(1) 342 41 00&nbsp;<br> Línea Gratuita: 018000 938081 <br> Linea
+                        Anticorrupción : 018000 938081 <br> Correo Institucional:
+                        servicioalciudadano@mincultura.gov.co; siartes@mincultura.gov.co</p>
+                    <p>&nbsp;</p>
+                    <p>Copyright © 2021&nbsp;</p>
+                </div>
+                <div class="col-lg-2 no-split split-top screen-md-sm logos_movil">
+                    <div class="logo ">
+                        <a href="https://www.gov.co ">
+                            <img src="assets/images/front/logos/logo_footer.png" alt="logo govco ">
+                        </a>
+                    </div>
+                    <div class="logo_co ">
+                        <a href="https://www.colombia.co ">
+                            <img src="assets/images/front/logos/logo_co_footer.png "
+                                alt="logo co ">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+

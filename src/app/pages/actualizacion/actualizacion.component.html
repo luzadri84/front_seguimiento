@@ -1,0 +1,143 @@
+<div class="row animated fadeIn">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="text-align: justify;">Proyecto</h4><br />
+                
+                <hr>
+                <form ngNativeValidate #formIP="ngForm" (ngSubmit)="actualizarProyecto(formIP.valid)">
+
+
+                    <div class="row">
+                        <div id="label" class="col-md-4" style="text-align: justify;">
+                            Supervisor
+                        </div>
+                        <div class="col-md-8">
+                            <select name="supervisor" class="form-control" [(ngModel)]="proyecto.proUsuarioAsignado"
+                                required >
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of supervisor" [ngValue]="item.id">
+                                    {{item.nombrecompleto}}</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div id="label" class="col-md-4" style="text-align: justify;">
+                            Zonas
+                        </div>
+                        <div class="col-md-8">
+                            <select name="zonas" class="form-control" [(ngModel)]="proyecto.zonaId"
+                                required >
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of zonas" [ngValue]="item.zonId">
+                                    {{item.zonaNombre}}</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha de entrega al Supervisor
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaEntregadoSupervisor" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaEntregadoSupervisor" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div id="label" class="col-md-4" style="text-align: justify;">
+                            Estado
+                        </div>
+                        <div class="col-md-8">
+                            <select name="proEstadoSeguimiento" class="form-control" [(ngModel)]="proyecto.proEstadoSeguimiento"
+                                required >
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of estados" [ngValue]="item.proEstado">
+                                    {{item.proNombreEstado}}</option>
+                            </select> 
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha Prorroga
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaProrroga" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaProrroga" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha de Estado
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaEstado" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaEstado" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha de Radicación
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaRadicacionSeguimiento" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaRadicacionSeguimiento" required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Cuentas por Pagar
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proCuentasPagar" type="text" class="form-control"
+                                [(ngModel)]="proyecto.proCuentasPagar" required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Observaciones
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proEstadoObservaciones" type="text" class="form-control"
+                                [(ngModel)]="proyecto.proEstadoObservaciones" required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class='row'>
+                        <div class="col-sm-12 text-center">
+                            <button class="btn btn-primary" type="submit"
+                                >Guardar</button>
+                            &nbsp;
+                            <a [routerLink]="['/resultados']">
+                                <button class="btn btn-primary" type="button">Cancelar</button>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

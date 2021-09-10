@@ -1,0 +1,54 @@
+<form ngNativeValidate #formCP="ngForm" (ngSubmit)="crearSeguimiento(formCP.valid)">
+    <div class="row">
+        <div class="col-md-4" style="text-align: justify;"> Tipo de seguimiento:	
+                     
+        </div>
+        <div class="col-md-8">
+            <select name="actId" class="form-control" [(ngModel)]="seguimiento.actId"  
+                required>
+                <option *ngFor="let item of actividades" [ngValue]="item.acT_ID">
+                    {{item.acT_NOMBRE}}
+                </option>
+            </select>
+        </div>
+
+        <div id="label" class="row">
+            <div class="col-md-4" style="text-align: left;">
+                Fecha de Registro (TRAE POR DEFECTO)
+            </div>
+            <div class="col-md-8">
+                <input name="segFechaCreo" type="date" class="form-control"
+                    [(ngModel)]="seguimiento.segFechaCreo" required>
+            </div>
+        </div>
+
+        <div id="label" class="row">
+            <div class="col-md-4" style="text-align: left;">
+                Fecha de Seguimiento
+            </div>
+            <div class="col-md-8">
+                <input name="segFechaSeguimiento" type="date" class="form-control"
+                    [(ngModel)]="seguimiento.segFechaSeguimiento" required>
+            </div>
+        </div>
+
+        <div id="label" class="row">
+            <div class="col-md-4" style="text-align: left;">
+                Observaciones
+            </div>
+            <div class="col-md-8">
+                <input name="segObservacion" type="text" class="form-control"
+                    [(ngModel)]="seguimiento.segObservacion" required>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-primary" type="submit"
+                    >Guardar</button>
+                &nbsp;
+               
+            </div>
+        </div>
+    </div>
+</form>    

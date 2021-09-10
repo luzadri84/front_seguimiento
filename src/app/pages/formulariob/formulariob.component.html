@@ -1,0 +1,263 @@
+<div class="row animated fadeIn">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 style="text-align: justify;">Proyecto</h4><br />
+                
+                <hr>
+                <form ngNativeValidate #formIP="ngForm" (ngSubmit)="actualizarProyecto(formIP.valid)">
+
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Número de Convenio
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proConvenio" type="number" class="form-control"
+                                [(ngModel)]="proyecto.proConvenio" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Número de Registro
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proNumeroRadicacion" type="number" class="form-control"
+                                [(ngModel)]="proyecto.proNumeroRadicacion" required>
+                        </div>
+                    </div> 
+                    <br />
+                  
+
+                    <div class="row">
+                        <div class="col-md-4" style="text-align: justify;"> Año Proyectado
+                        </div>
+                        <div class="col-md-8">
+                            <select name="vigId" class="form-control" [(ngModel)]="proyecto.vigId"  
+                                required>
+                                <option *ngFor="let item of vigencia" [ngValue]="item.vigId">
+                                    {{item.vigNombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Nombre del proyecto:
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proNombre" type="text" class="form-control"
+                                [(ngModel)]="proyecto.proNombre" required>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha Inicial
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaInicial" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaInicial" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha de Finalización
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaFinal" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaFinal" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha de legalización
+                        </div>
+                        <div class="col-md-8">
+                            <input name="proFechaLegalizacion" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaLegalizacion" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Valor Aprobado
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProValorAprobado" type="number" class="form-control"
+                                [(ngModel)]="proyecto.proValorAprobado" required>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Departamento:
+                        </div>
+                        <div class="col-md-8">
+                            <select name="Departamento" class="form-control"
+                                [(ngModel)]="proyecto.zonDepId" required
+                                (change)="changeDepartamento()">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listaDepartamentos"
+                                    [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: justify;">
+                            Municipio:
+                        </div>
+                        <div class="col-md-8">
+                            <select name="Municipio" class="form-control"
+                                [(ngModel)]="proyecto.zonId" required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listaMunicipios" [ngValue]="item.zonId">
+                                    {{item.zonNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div id="label" class="col-md-4" style="text-align: justify;">
+                            Línea
+                        </div>
+                        <div class="col-md-8">
+                            <select name="linea" class="form-control" [(ngModel)]="proyecto.linId"
+                                required >
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listaLineas" [ngValue]="item.linId">
+                                    {{item.linNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+                    
+                    <!-- <div class="row">
+                        <div *ngIf="lineaSeleccionada">
+                            <div id="titulo" class="col-md-12" style="text-align: left;">
+                                Descripción de la línea:
+                            </div>
+                            <div id="label" class="col-md-12" style="text-align: justify;">
+                                {{this.lineaDescripcion}}
+                            </div>
+                        </div>
+                    </div>
+                    <br /> -->
+
+                    <br />
+                    <div class="row">
+                        <div id="label" class="col-md-4" style="text-align: justify;">
+                            Área 
+                        </div>
+                        <div class="col-md-8">
+                            <select name="area" class="form-control" [(ngModel)]="proyecto.areId"
+                                required>
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let item of listaAreas" [ngValue]="item.areId">
+                                    {{item.areNombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Persona Encargada
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProPersonaEncargadaProyecto" type="text" class="form-control"
+                                [(ngModel)]="proyecto.proPersonaEncargadaProyecto" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Teléfono Persona Encargada
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProTelefonosPersonaEncargadaProyecto" type="number" class="form-control"
+                                [(ngModel)]="proyecto.proTelefonosPersonaEncargadaProyecto" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Celular Persona Encargada
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProCelularPersonaEncargada" type="number" class="form-control"
+                                [(ngModel)]="proyecto.proCelularPersonaEncargada" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Correo Electrónico Persona Encargada
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProCorreoPersonaEncargada" type="email" class="form-control"
+                                [(ngModel)]="proyecto.proCorreoPersonaEncargada" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha Inicial Puntual
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProFechaPuntualInicial" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaPuntualInicial" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="label" class="row">
+                        <div class="col-md-4" style="text-align: left;">
+                            Fecha Final Puntual
+                        </div>
+                        <div class="col-md-8">
+                            <input name="ProFechaPuntualFinal" type="date" class="form-control"
+                                [(ngModel)]="proyecto.proFechaPuntualFinal" required>
+                        </div>
+                    </div>
+                    
+                    
+                    <br />
+                    <br />
+                    <div class='row'>
+                        <div class="col-sm-12 text-center">
+                            <button class="btn btn-primary" type="submit"
+                                >Guardar</button>
+                            &nbsp;
+                            <a [routerLink]="['/resultados']">
+                                <button class="btn btn-primary" type="button">Cancelar</button>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

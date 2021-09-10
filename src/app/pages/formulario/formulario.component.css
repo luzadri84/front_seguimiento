@@ -1,0 +1,8 @@
+.textMax{
+    margin: 0px;
+    padding: 0px;
+    display: inline-flex; 
+    text-align: right; 
+    font-size: 10px;
+    color:#398bf7;
+}

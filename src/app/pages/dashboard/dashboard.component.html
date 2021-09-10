@@ -1,0 +1,81 @@
+<div class="row animated fadeIn">
+    <dx-load-panel
+        #loadPanel
+        shadingColor="rgba(0,0,0,0.4)"
+        [position]="{ of: '#divForm' }"
+        [(visible)]="loadingVisible"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        message="Cargando, por favor espere."
+        [closeOnOutsideClick]="false">
+    </dx-load-panel>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 style="text-align: center;">Bienvenido al programa Nacional de concertación cultural a&ntilde;o
+                    {{vigencia}}!</h2><br />
+                <p>
+                    Recuerde verificar el manual de la convocatoria {{vigencia}} en el numeral 1.8.1. N&uacute;mero
+                    m&aacute;ximo de proyectos que se pueden presentar.<br />
+                    Su tipo de entidad es: <b>{{tipoEntidad}}.</b><br />
+                </p>
+                <p *ngIf="proponente.appProyectos.length === 0">
+                    En este momento no tiene proyecto registrados, para adicionar un nuevo proyecto oprima el siguiente
+                    bot&oacute;n.
+                </p>
+                <p *ngIf="proponente.appProyectos.length !== 0">
+                    <b>El siguiente es el listado de sus proyectos:</b><br />
+                    Recuerde que puede modificar, imprimir o revisar la documentaci&oacute;n de su proyecto. Solo active
+                    la opci&oacute;n que desea en la fila del proyecto.
+                </p>
+            </div>
+            <form ngNativeValidate #formCP="ngForm" (ngSubmit)="crearProyecto()">
+                <div class="row" *ngIf="proponente.appProyectos.length !== proponente.tip.tipNumeroProyectos">
+                    <div class="col-md-5">&nbsp;</div>
+                    <div class="col-md-2"><button class="btn btn-primary my-2 my-sm-0 m-5 float-left"
+                            type="submit">Nuevo proyecto</button></div>
+                    <div class="col-md-5">&nbsp;</div>
+                </div>
+            </form>
+            <div class="row" *ngIf="proponente.appProyectos.length !== 0" id="divForm">
+                <div class="col-md-12">
+                    <dx-data-grid id="gridContainer" [dataSource]="proponente.appProyectos" showBorders="true" [columnAutoWidth]="true" [rowAlternationEnabled]="true"
+                        [allowColumnResizing]="true" [wordWrapEnabled]="true">
+                        <dxo-export [enabled]="true" fileName="Proyectos"></dxo-export>
+                        <dxo-filter-row [visible]="true"></dxo-filter-row>
+                        <dxo-header-filter [visible]="true"></dxo-header-filter>
+                        <dxo-group-panel [visible]="true" emptyPanelText="Arrastra una columna aquí para agrupar por ella"></dxo-group-panel>
+                        <dxo-search-panel [visible]="true" [width]="240" placeholder="Buscar..."></dxo-search-panel>
+                        <dxi-column caption="Acciones" cellTemplate="accionCellTemplate"></dxi-column>
+                        <dxi-column dataField="proNumeroRadicacion" caption="No. de registro"></dxi-column>
+                        <dxi-column dataField="proNombre" caption="Nombre del proyecto"></dxi-column>
+                        <dxi-column dataField="lineaNombre" caption="Línea del proyecto"></dxi-column>
+                        <dxi-column dataField="proEstadoNombre" caption="Estado"></dxi-column>
+                        <dxi-column dataField="usuCreo" caption="Usuario"></dxi-column>
+                        <dxi-column dataField="fecCreo" caption="Última modificación" dataType="date" format="dd/MM/yyyy HH:mm:ss" ></dxi-column>
+                        <dxo-remote-operations [sorting]="true" [paging]="true">
+                        </dxo-remote-operations>
+                        <dxo-summary>
+                            <dxi-total-item column="proId" summaryType="count" displayFormat="Cantidad: {0}">
+                            </dxi-total-item>
+                        </dxo-summary>
+                        <dxo-paging [pageSize]="10"></dxo-paging>
+                        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 40]"></dxo-pager>
+                        <div *dxTemplate="let d of 'accionCellTemplate'">
+                            <div class="button-cell" style="text-align: center;">
+                                <i style="font-size:20px; cursor:pointer;" class="ti-pencil" placement="right" ngbTooltip="Seleccionar" 
+                                    *ngIf="d.data.proEstadoNombre === 'En digitación'"
+                                    (click)="seleccionarRegistro(d.data)"></i>&nbsp;&nbsp;
+                                <i style="font-size:20px; cursor:pointer;" class="ti-printer" placement="right" ngbTooltip="Imprimir"
+                                    *ngIf="d.data.proEstadoNombre === 'Enviado'"
+                                    (click)="imprimirParteB(d.data)"></i>
+                            </div>
+                        </div>
+                    </dx-data-grid>
+                </div>
+            </div>
+            <br /><br />
+        </div>
+    </div>
+</div>
