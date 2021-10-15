@@ -160,5 +160,10 @@ export class FormularioService {
     return this.http.put(url, data);  
   }
 
+  cargarHistoricoSeguimiento(id: any) {
+    const url = environment.URL_API + 'negocio/proyecto/' + id + '/SeguimientoHistorico';
+    return this.http.get(url);
+  }
+
 
 }

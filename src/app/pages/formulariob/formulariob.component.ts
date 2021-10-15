@@ -135,6 +135,7 @@ export class FormularioBComponent implements OnInit {
   startEditAction: string = "click";
   errorValidacion: string = "";
   errorValidacionTope: string = "";
+  permiteedicion: boolean  = false;
   //suma: string = "10";
   // sumaTotal: number = 0;
   // granSuma: number = 0;
@@ -209,6 +210,7 @@ export class FormularioBComponent implements OnInit {
     let session: Session = this._usuarioService.getCurrentSession();
     if (this.proId !== null) {
       this.getProyecto(this.proId);
+      this.permiteedicion = session.user.perfilesCuentausuario[0].perfil.permiteeditar; 
       this.existeProyecto = true;
     } else {
       if (session.proId !== null && session.proId !== undefined) {

@@ -34,6 +34,7 @@ export class FormularioComponent implements OnInit {
     public loadingVisible = false;
     tipoEntidadProponente: Array<any>;
     public session: Session;
+    permiteedicion: boolean  = false;
 
     constructor(public _administracionService: AdministracionService,
         public _formualrioService: FormularioService,
@@ -47,7 +48,6 @@ export class FormularioComponent implements OnInit {
         //this._currentUser = this._usuarioService.getCurrentUser();
         //Get id proyecto
         let session: Session = this._usuarioService.getCurrentSession();
-
         this.route.queryParamMap.subscribe((params) => {
             this.proId = params.get("proId");
                 if(this.proId == null)
@@ -55,10 +55,15 @@ export class FormularioComponent implements OnInit {
                     session.proId = null;
                 }
             }
+
+            
         );
         this.existeProyecto = false;
         
         if (this.proId !== null) {
+        this.permiteedicion = session.user.perfilesCuentausuario[0].perfil.permiteeditar; 
+        
+        debugger;
         this.getProponente(this.proId);
         this.existeProyecto = true;
         } else {

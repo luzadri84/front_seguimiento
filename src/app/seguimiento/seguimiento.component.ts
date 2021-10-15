@@ -27,7 +27,6 @@ export class SeguimientoComponent implements OnInit {
 
   ngOnInit() {
     let session: Session = this._usuarioService.getCurrentSession();
-
         this.route.queryParamMap.subscribe((params) => {
             this.proId = params.get("proId");
                 if(this.proId == null)
@@ -58,7 +57,7 @@ export class SeguimientoComponent implements OnInit {
 
 crearSeguimiento(isValid: boolean){
   if(isValid) {
-    alert("entro");
+   // alert("entro");
           this.loadingVisible = true;
           this.seguimiento.proId = this.proId;
           //this.formularioA = new FormularioA(this.proponente, this.proyecto);

@@ -458,12 +458,11 @@
                     necesario que remita la factura.
                     <br /><br /> -->
                     <div class='row' id="divForm">
-                        <div class="col-sm-12 text-center">
-                            <button class="btn btn-primary" type="submit">Guardar</button>
+                        <div  class="col-sm-12 text-center">
+                            <button class="btn btn-primary" *ngIf="permiteedicion" type="submit">Guardar</button>
                             &nbsp;
                             <a [routerLink]="['/resultados']">
-                                <button class="btn btn-primary"
-                                    type="button">Cancelar</button>
+                                <button class="btn btn-primary" type="button">Cancelar</button>
                             </a>
                             &nbsp;
                             <a [routerLink]="['/formularioB']" [queryParams]="{proId:proId}" *ngIf="existeProyecto === true">

@@ -220,6 +220,25 @@ export class IndicadoresbyLinea{
     ){}
 }
 
+
+export class HistoricoSeguimiento{
+    constructor(
+        public  ID: number,
+        public  ProId: number,
+        public  ProUsuarioAsignado: number, 
+        public  ZonaId: number, 
+        public  ProFechaEntregadoSupervisor: string, 
+        public  ProEstadoSeguimiento: number, 
+        public  ProFechaProrroga: string, 
+        public  ProFechaEstado: string, 
+        public  ProFechaRadicacionSeguimiento: string, 
+        public  ProCuentasPagar: number, 
+        public  ProEstadoObservaciones: string, 
+        public  FecModifico: string, 
+        public  UsuModifico: string
+    ){}
+}
+
 export class ValoresIndicador{
     constructor(
         public viId: number,

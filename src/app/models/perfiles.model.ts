@@ -4,5 +4,6 @@ export class Perfil {
         public perfilnombre: string,
         public perfiltipo: string,
         public perfilhabilitado: string,
+        public permiteeditar: boolean
     ) { }
 }

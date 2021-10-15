@@ -35,7 +35,7 @@ import {
   ProyectoActividadesObligatorias,
   ActividadesObligatorias,
   IndicadorLineaCategoriaMunicipio,
-  TrayectoriaProyecto, AppPresupuestoDetalleTipo, AppPresupuestoDetalle, Indicadores, IndicadoresbyLinea, ValoresIndicador, ValoresIndicadorLineaCategioriaMunicipio, AppBeneficiarios, Vigencia, ProyectoSeguimiento, pasoBase, Funcionario, Zonas, Estados
+  TrayectoriaProyecto, AppPresupuestoDetalleTipo, AppPresupuestoDetalle, Indicadores, IndicadoresbyLinea, ValoresIndicador, ValoresIndicadorLineaCategioriaMunicipio, AppBeneficiarios, Vigencia, ProyectoSeguimiento, pasoBase, Funcionario, Zonas, Estados, HistoricoSeguimiento
 } from '../../models/formulariob.model';
 import { AdministracionService } from '../../services/administracion/administracion.service';
 import { FormularioService } from '../../services/formulario/formulario.service';
@@ -61,71 +61,26 @@ export class ActualizacionComponent implements OnInit {
   //listaCronograma: Cronograma[] = [];
   listaDepartamentos: Departamentos[] = [];
   listaMunicipios: Municipios[] = [];
-  //listaMetas: Metas[] = [];
-  //listaIndicadores: Indicadores[] = [];
-  //listaIndicadoresLinea: IndicadoresbyLinea[] = [];
-  //listaValoresIndicador: ValoresIndicador[] = [];
-  //listaProyectoValoresIndicador: ValoresIndicador[] = [];
-  //listaProyectoActividadesObligatorias: ProyectoActividadesObligatorias[] = [];
-  //listaActividadesObligatorias: ActividadesObligatorias[] = [];
-  //listaIndicadoresLineaMunicipioCategoria: IndicadorLineaCategoriaMunicipio[] = [];
-  //listaValoresIndicadoresLineaCategoriaMunicipio: ValoresIndicadorLineaCategioriaMunicipio [] = [];
-
-  //estadoTemasbyProyecto: TemasbyProyectos[] = [];
-  //savedTemasbyProyecto: TemasbyProyectos[] = [];
-  //partesProyecto: any[] = [];
   itemsArea = [];
   linea: Lineas;
   dataArea: ArrayStore;
   lineaDescripcion: string;
-  
   proyecto: ProyectoSeguimiento = new ProyectoSeguimiento();
-  //temas: Temas;
-  //metas: Metas;
-  //formularioB: FormularioB;
-
-  // lineaSeleccionada = false;
-  // mostrarTemas: boolean = false;
-  // proExiste: boolean = false;
-  // proFechasExiste: boolean = false;
-  // checklengthTemas: boolean = true;
   fechaInicioProyecto: Date;
-  // fechaFinalProyecto: Date;
-  // fechaRestriccionInicioDP1: Date;
-  // fechaRestriccionFinalDP1: Date;
-  // fechaRestriccionInicioDP2: Date;
-  // fechaRestriccionFinalDP2: Date;
   year: number;
-
-  // editorOptions: editorOptions;
-  // dbisValidInicio: boolean = true;
-  // dbisValidFinal: boolean = true;
-  // dbisValidActInicio: boolean = true;
-  // dbisValidActFinal: boolean = true;
-
-  // flagIncentivos: boolean = false;
-  // flagShowIncentivos: boolean = false;
-  // checkedRB: boolean = false;
-  // showPopup: boolean = false;
-
   ListaTrayectoria = [];
   listaDetalleTipo = [];
   ListaTipoTrayectoria = [];
   ListaTrayectoriaTipoTrayectoria = [];
   listaILMC = [];
   listaVILMC = [];
-  // GuardarTrayectoriaL: string;
-  // respuestasTrayectoria: TrayectoriaProyecto[] = [];
-  // trayectoriaProyecto: TrayectoriaProyecto = new TrayectoriaProyecto();
-  // appBeneficiarios: AppBeneficiarios = new AppBeneficiarios();
-
+  //historicoSeguimiento: HistoricoSeguimiento[];
   arreglo = [];
- // appPresupuestoDetalleTipo: AppPresupuestoDetalleTipo[];
-  //appPresupuestoDetalle: AppPresupuestoDetalle[];
   selectTextOnEditStart: boolean = true;
   startEditAction: string = "click";
   errorValidacion: string = "";
   errorValidacionTope: string = "";
+  permiteedicion: boolean  = false;
   constructor(
     public _formularioService: FormularioService,
     public _administracionService: AdministracionService,
@@ -169,10 +124,15 @@ export class ActualizacionComponent implements OnInit {
       this.vigencia = res;
     })
 
+    
+
     // Se obtiene el proId de la ruta
     this.route.queryParamMap.subscribe((params) => {
       this.proId = params.get("proId");
+
+     this.cargarHistorico(this.proId);
       //alert("parametro " + this.proId);
+      
     });
 
     let session: Session = this._usuarioService.getCurrentSession();
@@ -234,6 +194,7 @@ export class ActualizacionComponent implements OnInit {
         this.proyecto = res;
 
         let session : Session = this._usuarioService.getCurrentSession();
+        this.permiteedicion = session.user.perfilesCuentausuario[0].perfil.permiteeditar; 
         if(id !== null) {
           this.existeProyecto = true;
           session.proId = this.proId;
@@ -292,6 +253,12 @@ export class ActualizacionComponent implements OnInit {
   cargarLineas() {
     this._administracionService.cargarTipoLinea().subscribe((res: Lineas[]) => {
       this.listaLineas = res;
+    });
+  }
+
+  cargarHistorico(IdProd:number){
+    this._formularioService.cargarHistoricoSeguimiento(IdProd).subscribe((res) => {
+      this.historicoSeguimiento = res;
     });
   }
 
@@ -391,13 +358,14 @@ export class ActualizacionComponent implements OnInit {
           this.loadingVisible = false;
           if (result.resultado) {
             Swal.fire("Información Proyecto", "La información del proyecto que almacenada!", "success");
-            this.proyecto.proId = result.id;
+            //this.proyecto.proId = result.id;
             //this.estadoTemasbyProyecto = [];
            //this.listaValoresIndicadoresLineaCategoriaMunicipio = [];
             //this.checkedRB = false;
             //this.flagIncentivos = true;
             //this.flagShowIncentivos = false;
             this.getProyecto(this.proId);
+            this.cargarHistorico(this.proId);
           } else {
             Swal.fire({
               icon: "error",

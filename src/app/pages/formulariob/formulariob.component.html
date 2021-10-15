@@ -247,7 +247,7 @@
                     <br />
                     <div class='row'>
                         <div class="col-sm-12 text-center">
-                            <button class="btn btn-primary" type="submit"
+                            <button class="btn btn-primary" *ngIf="permiteedicion" type="submit"
                                 >Guardar</button>
                             &nbsp;
                             <a [routerLink]="['/resultados']">
