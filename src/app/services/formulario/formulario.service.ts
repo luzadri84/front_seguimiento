@@ -165,5 +165,9 @@ export class FormularioService {
     return this.http.get(url);
   }
 
+  cargarSeguimiento(id: any) {
+    const url = environment.URL_API + 'negocio/proyecto/' + id + '/Seguimiento';
+    return this.http.get(url);
+  }
 
 }

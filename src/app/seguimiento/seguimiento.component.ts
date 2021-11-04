@@ -18,6 +18,7 @@ export class SeguimientoComponent implements OnInit {
   segid:number = 0;
   public proId: any;
   public session: Session;
+  [x: string]: any;
 ;
   constructor(public _administracionService: AdministracionService,
     public _formualrioService: FormularioService,
@@ -26,6 +27,7 @@ export class SeguimientoComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+      
     let session: Session = this._usuarioService.getCurrentSession();
         this.route.queryParamMap.subscribe((params) => {
             this.proId = params.get("proId");
@@ -33,9 +35,13 @@ export class SeguimientoComponent implements OnInit {
                 {
                     session.proId = null;
                 }
-            }
-        );
+                else
+                {
+                    this.cargarSeguimiento(this.proId);
+                }
+            });
     this.cargarActividades();
+    
   }
   
   cargarActividades() {
@@ -53,11 +59,16 @@ export class SeguimientoComponent implements OnInit {
                 console.log(<any>error);
             }
         );
-}
+    }
+
+cargarSeguimiento(IdProd:number){
+    this._formualrioService.cargarSeguimiento(IdProd).subscribe((res) => {
+      this.historicoSeguimiento = res;
+    });
+  }
 
 crearSeguimiento(isValid: boolean){
   if(isValid) {
-   // alert("entro");
           this.loadingVisible = true;
           this.seguimiento.proId = this.proId;
           //this.formularioA = new FormularioA(this.proponente, this.proyecto);
@@ -69,6 +80,7 @@ crearSeguimiento(isValid: boolean){
                       if (result.resultado) {
                           Swal.fire('Seguimiento', 'El registro de seguimiento se guardó exitosamente!', 'success');
                           this.segid = result.id;
+                          this.cargarSeguimiento(this.proId);
                       }
                       else {
                           Swal.fire({
