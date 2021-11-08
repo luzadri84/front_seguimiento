@@ -45,6 +45,12 @@ export class FormularioService {
     const url = environment.URL_API + 'negocio/proyecto/';
     return this.http.put(url, data);
   }
+
+  guardarProyectoActualizacion(data: any) {
+    const url = environment.URL_API + 'negocio/seguimientoActualizacion/';
+    return this.http.put(url, data);
+  }
+
   cargarComponentesByProyecto(id: any) {
     const url = environment.URL_API + 'negocio/proyecto/' + id + '/componente';
     return this.http.get(url);

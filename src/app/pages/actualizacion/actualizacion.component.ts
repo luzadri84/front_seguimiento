@@ -35,7 +35,7 @@ import {
   ProyectoActividadesObligatorias,
   ActividadesObligatorias,
   IndicadorLineaCategoriaMunicipio,
-  TrayectoriaProyecto, AppPresupuestoDetalleTipo, AppPresupuestoDetalle, Indicadores, IndicadoresbyLinea, ValoresIndicador, ValoresIndicadorLineaCategioriaMunicipio, AppBeneficiarios, Vigencia, ProyectoSeguimiento, pasoBase, Funcionario, Zonas, Estados, HistoricoSeguimiento
+  TrayectoriaProyecto, AppPresupuestoDetalleTipo, AppPresupuestoDetalle, Indicadores, IndicadoresbyLinea, ValoresIndicador, ValoresIndicadorLineaCategioriaMunicipio, AppBeneficiarios, Vigencia, ProyectoSeguimiento, pasoBase, Funcionario, Zonas, Estados, HistoricoSeguimiento, ProyectoActualizacion
 } from '../../models/formulariob.model';
 import { AdministracionService } from '../../services/administracion/administracion.service';
 import { FormularioService } from '../../services/formulario/formulario.service';
@@ -66,6 +66,7 @@ export class ActualizacionComponent implements OnInit {
   dataArea: ArrayStore;
   lineaDescripcion: string;
   proyecto: ProyectoSeguimiento = new ProyectoSeguimiento();
+  proyectoActualizacion: ProyectoActualizacion = new ProyectoActualizacion();
   fechaInicioProyecto: Date;
   year: number;
   ListaTrayectoria = [];
@@ -182,6 +183,7 @@ export class ActualizacionComponent implements OnInit {
     this.proyecto.proFechaPuntualInicial= "";
     this.proyecto.proFechaPuntualFinal= "";
   }
+  
 
 
 
@@ -346,25 +348,25 @@ export class ActualizacionComponent implements OnInit {
     // Agregamos los temas seleccionados
     //this.proyecto.proId = 0;
     if (isValid) {
-      this.proyecto.proFechaEntregadoSupervisor = moment(this.proyecto.proFechaEntregadoSupervisor).format("YYYY-MM-DD 00:00:00");
-      this.proyecto.proFechaProrroga = moment(this.proyecto.proFechaProrroga).format("YYYY-MM-DD 23:59:59");
-      this.proyecto.proFechaEstado = moment(this.proyecto.proFechaEstado).format("YYYY-MM-DD 23:59:59");
-      this.proyecto.proFechaRadicacionSeguimiento = moment(this.proyecto.proFechaRadicacionSeguimiento).format("YYYY-MM-DD 23:59:59");
-      this.proyecto.proIdProponente = this.proId;
+      this.proyectoActualizacion.proFechaEntregadoSupervisor = moment(this.proyectoActualizacion.proFechaEntregadoSupervisor).format("YYYY-MM-DD 00:00:00");
+      this.proyectoActualizacion.proFechaProrroga = moment(this.proyectoActualizacion.proFechaProrroga).format("YYYY-MM-DD 23:59:59");
+      this.proyectoActualizacion.proFechaEstado = moment(this.proyectoActualizacion.proFechaEstado).format("YYYY-MM-DD 23:59:59");
+      this.proyectoActualizacion.proFechaRadicacionSeguimiento = moment(this.proyectoActualizacion.proFechaRadicacionSeguimiento).format("YYYY-MM-DD 23:59:59");
+      this.proyectoActualizacion.proId = this.proId;
      
       this.loadingVisible = true;
-      this._formularioService.guardarProyecto(this.proyecto).subscribe(
+      this._formularioService.guardarProyectoActualizacion(this.proyectoActualizacion).subscribe(
         (result: any) => {
           this.loadingVisible = false;
           if (result.resultado) {
-            Swal.fire("Información Proyecto", "La información del proyecto que almacenada!", "success");
+            Swal.fire("Información Proyecto", "La actualización ha sido almacenada!", "success");
             //this.proyecto.proId = result.id;
             //this.estadoTemasbyProyecto = [];
            //this.listaValoresIndicadoresLineaCategoriaMunicipio = [];
             //this.checkedRB = false;
             //this.flagIncentivos = true;
             //this.flagShowIncentivos = false;
-            this.getProyecto(this.proId);
+           // this.getProyecto(this.proId);
             this.cargarHistorico(this.proId);
           } else {
             Swal.fire({

@@ -190,6 +190,23 @@ export class ProyectoSeguimiento {
     
 }
 
+
+export class ProyectoActualizacion {
+    
+    proId: number;
+    proUsuarioAsignado: number;
+    zonaId: number;
+    proFechaEntregadoSupervisor: string;
+    proFechaProrroga: string;
+    proEstadoSeguimiento: number;
+    proFechaEstado: string;
+    proFechaRadicacionSeguimiento: string;
+    proCuentasPagar: number;
+    proEstadoObservaciones: string;
+   //public proEstado: string,
+
+}
+
 export class Lineas {
     constructor(
         public linId: number,

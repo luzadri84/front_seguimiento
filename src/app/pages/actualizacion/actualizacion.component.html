@@ -24,7 +24,7 @@
                             Supervisor
                         </div>
                         <div class="col-md-8">
-                            <select name="supervisor" class="form-control" [(ngModel)]="proyecto.proUsuarioAsignado"
+                            <select name="supervisor" class="form-control" [(ngModel)]="proyectoActualizacion.proUsuarioAsignado"
                                 required >
                                 <option value="">Seleccione</option>
                                 <option *ngFor="let item of supervisor" [ngValue]="item.id">
@@ -38,7 +38,7 @@
                             Zonas
                         </div>
                         <div class="col-md-8">
-                            <select name="zonas" class="form-control" [(ngModel)]="proyecto.zonaId"
+                            <select name="zonas" class="form-control" [(ngModel)]="proyectoActualizacion.zonaId"
                                 required >
                                 <option value="">Seleccione</option>
                                 <option *ngFor="let item of zonas" [ngValue]="item.zonId">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proFechaEntregadoSupervisor" type="date" class="form-control"
-                                [(ngModel)]="proyecto.proFechaEntregadoSupervisor" required>
+                                [(ngModel)]="proyectoActualizacion.proFechaEntregadoSupervisor" required>
                         </div>
                     </div>
                     <br />
@@ -62,7 +62,7 @@
                             Estado
                         </div>
                         <div class="col-md-8">
-                            <select name="proEstadoSeguimiento" class="form-control" [(ngModel)]="proyecto.proEstadoSeguimiento"
+                            <select name="proEstadoSeguimiento" class="form-control" [(ngModel)]="proyectoActualizacion.proEstadoSeguimiento"
                                 required >
                                 <option value="">Seleccione</option>
                                 <option *ngFor="let item of estados" [ngValue]="item.proEstado">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proFechaProrroga" type="date" class="form-control"
-                                [(ngModel)]="proyecto.proFechaProrroga" required>
+                                [(ngModel)]="proyectoActualizacion.proFechaProrroga" required>
                         </div>
                     </div>
                     <br />
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proFechaEstado" type="date" class="form-control"
-                                [(ngModel)]="proyecto.proFechaEstado" required>
+                                [(ngModel)]="proyectoActualizacion.proFechaEstado" required>
                         </div>
                     </div>
                     <br />
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proFechaRadicacionSeguimiento" type="date" class="form-control"
-                                [(ngModel)]="proyecto.proFechaRadicacionSeguimiento" required>
+                                [(ngModel)]="proyectoActualizacion.proFechaRadicacionSeguimiento" required>
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proCuentasPagar" type="text" class="form-control"
-                                [(ngModel)]="proyecto.proCuentasPagar" required>
+                                [(ngModel)]="proyectoActualizacion.proCuentasPagar" required>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proEstadoObservaciones" type="text" class="form-control"
-                                [(ngModel)]="proyecto.proEstadoObservaciones" required>
+                                [(ngModel)]="proyectoActualizacion.proEstadoObservaciones" required>
                         </div>
                     </div>
 
