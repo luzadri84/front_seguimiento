@@ -16,9 +16,8 @@
                     <dxi-column dataField="tdoObservaciones" caption="Cargue" [allowSorting]="false"
                         cellTemplate="cellTemplateItem">
                         <div *dxTemplate="let datosItem of 'cellTemplateItem'">
-                            <label id="label" for="poblacion">¿Número de páginas del documento?</label>&nbsp;
-                            <input name="numPaginas" type="number"  class="form-control" style="width: 70px;" [(ngModel)]="datosItem.data.numeroActualPaginas"  minlength="1"  maxlength="3">
-                            <div class="main-block">
+                            <!--<input name="numPaginas" type="number"  class="form-control" style="width: 70px;" [(ngModel)]="datosItem.data.numeroActualPaginas"  minlength="1"  maxlength="3">
+                             <div class="main-block">
                                 <div class="file-uploader-block" *ngIf="datosItem.data.numeroActualPaginas > 0">
                                     <dx-file-uploader (onUploaded)="changeFile()" [(uploadUrl)]="uploadUrl"
                                         [uploadHeaders]="headers" [multiple]="false" uploadMode="instantly"
@@ -29,8 +28,8 @@
                                         invalidMaxFileSizeMessage="Excede el máximo permitido" uploadFailedMessage = "Hubo una falla en el cargue " >
                                     </dx-file-uploader>
                                 </div>
-                            </div>
-                            <hr>
+                            </div> 
+                            <hr>-->
                             <div [style.display]="ocultar(datosItem.data.tdvRutaAdjunto)">
                                 <a href="javascript:void(0);" (click)="descargar(datosItem.data.tdvNombre);">
                                     <dx-button icon="download" text="">

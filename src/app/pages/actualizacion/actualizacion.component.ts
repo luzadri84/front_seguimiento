@@ -265,7 +265,7 @@ export class ActualizacionComponent implements OnInit {
   }
 
   cargarSupervisor() {
-    this._administracionService.GetFuncionario(3).subscribe((res) => {
+    this._administracionService.GetFuncionario("Supervisor").subscribe((res) => {
       this.supervisor = res;
     });
   }

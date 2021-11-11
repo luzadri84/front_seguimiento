@@ -68,7 +68,7 @@ export class AdministracionService {
         return this.http.get(url);
       }
 
-      GetFuncionario(idPerfil: number): Observable<any>{
+      GetFuncionario(idPerfil: string): Observable<any>{
         const url = environment.URL_API + 'parametria/Usuario/'+ idPerfil +'/Funcionarios';
         return this.http.get(url);
       }

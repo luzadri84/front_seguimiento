@@ -12,7 +12,7 @@ import { FormularioBComponent } from "./formulariob/formulariob.component";
 import { ActualizacionComponent } from './actualizacion/actualizacion.component';
 //import { SeguimientoComponent } from './seguimiento/seguimiento.component';
 //import { EnviarComponent } from './enviar/enviar.component';
-//import { DocumentosComponent } from './documentos/documentos.component';
+import { DocumentosComponent } from './documentos/documentos.component';
 
 const pagesRoutes: Routes = [
   {
@@ -24,7 +24,7 @@ const pagesRoutes: Routes = [
       { path: 'formulario', component: FormularioComponent, data: { titulo: 'Proponente' } },
       { path: 'formularioB', component: FormularioBComponent, data: { titulo: 'Proyecto' } },
       { path: 'actualizacion', component: ActualizacionComponent, data: { titulo: 'Actualizaciones' } },
-      //{ path: 'documentos', component: DocumentosComponent, data: { titulo: 'Cargar documentos' } },
+      { path: 'documentos', component: DocumentosComponent, data: { titulo: 'Cargar documentos' } },
       //{ path: 'enviar', component: EnviarComponent, data: { titulo: 'Enviar proyecto' } },
       { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes del tema' } },
       { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },

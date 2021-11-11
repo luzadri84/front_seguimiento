@@ -33,7 +33,7 @@ export class ResultadosComponent implements OnInit {
     var anio = moment(new Date()).format('YYYY');
 
     this.cargarDepartamentos();
-    
+    debugger;
     this._formularioService.GetAppResultado(1 ,'0', '0','0', '0', '0' ).subscribe((res) => {
       this.resultadoConvocatoria = res;
     })

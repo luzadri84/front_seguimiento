@@ -34,6 +34,8 @@ export class Componentes{
         public usuModifico: string,
         public fecCreo: string,
         public fecModifico: string,
+        public comFechaInicioFestival:string,
+        public comFechaFinalFestival:string,
     ){}
 }
 
@@ -140,35 +142,22 @@ export class Proyecto {
 export class ProyectoSeguimiento {
     
          proId: number;
-         //proTipoCuenta: string;
-        // proNumeroCuenta: string;
+       
          proNombre: string;
-         //entId: number;
+     
          proIdProponente: number;
          proPersonaEncargadaProyecto: string;
          proTelefonosPersonaEncargadaProyecto: string;
          proCorreoPersonaEncargada: string;
-         //zonIdEntidadBancaria: string;
-        // zonIdEntidadBancariaDep: string;
+  
          linId: number;
          zonDepId: string;
          zonId: string;
          areId: number;
-         //proOtrosMunicipios: string;
-         //proCorregimiento: string;
-        //  areaId1: number;
-        //  areaId2: number;
-        //  areaId3: number;
-        //  proJustificacion: string;
-         //proODescripcion: string;
-         //proObjeto: string;
+    
          proFechaInicial: string;
          proFechaFinal: string;
-         //proEstado: string;
-         //usuCreo: string;
-         //usuModifico: string;
-         //fecCreo: string;
-         //fecModifico: string;
+         
          proConvenio: string;
          proNumeroRadicacion: string;
          vigId: number;
@@ -186,7 +175,7 @@ export class ProyectoSeguimiento {
          proFechaRadicacionSeguimiento: string;
          proCuentasPagar: number;
          proEstadoObservaciones: string;
-        //public proEstado: string,
+        
     
 }
 
@@ -520,6 +509,7 @@ export class AppBeneficiarios{
 export class Resultado
 {
     prO_ID: number;
+    id_PROPONENTE: number;
     prO_NUMERO_RADICACION: string;
     prO_NOMBRE: string;
     prO_RAZON_SOCIAL: string;

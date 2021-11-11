@@ -159,7 +159,7 @@
                         <div>
                             <ul>
                                 <li>
-                                    <a [routerLink]="['/formulario']" [queryParams]="{proId:data.data.prO_ID}">
+                                    <a [routerLink]="['/formulario']" [queryParams]="{proId:data.data.iD_PROPONENTE}">
                                         <button class="btn btn-primary"
                                             type="button">{{data.data.prO_ID}}
                                         </button>
@@ -247,6 +247,7 @@
                 </div>
 
                 </dxi-column>
+                <dxi-column dataField="iD_PROPONENTE" caption="Id Proponente"></dxi-column>
                 <dxi-column dataField="prO_NUMERO_RADICACION" caption="Nro Radicación"></dxi-column>
                 <dxi-column dataField="prO_NOMBRE" caption="Proyecto"></dxi-column>
                 <dxi-column dataField="prO_RAZON_SOCIAL" caption="Entidad Responsable"></dxi-column>

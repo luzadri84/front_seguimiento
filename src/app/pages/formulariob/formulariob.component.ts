@@ -39,6 +39,7 @@ import {
 } from '../../models/formulariob.model';
 import { AdministracionService } from '../../services/administracion/administracion.service';
 import { FormularioService } from '../../services/formulario/formulario.service';
+import { threadId } from 'worker_threads';
 
 
 @Component({
@@ -78,7 +79,7 @@ export class FormularioBComponent implements OnInit {
   // formTrayectoria: FormTrayectoria;
   // formCompProyecto: FormCompProyecto;
   // formPresupuesto: FormPresupuesto;
-  //componentes: Componentes;
+  componentes: Componentes;
   //cronograma: Cronograma;
   //proyectoActividadesObligatorias: ProyectoActividadesObligatorias;
   //actividadesObligatorias: ActividadesObligatorias;
@@ -433,11 +434,21 @@ export class FormularioBComponent implements OnInit {
       .cargarProponenbyProyecto(id)
       .subscribe((res: ProyectoSeguimiento) => {
         this.proyecto = res;
-
         let session : Session = this._usuarioService.getCurrentSession();
         if(id !== null) {
           this.existeProyecto = true;
           session.proId = this.proId;
+            this._formularioService
+              .cargarComponentesByProyecto(id)
+              .subscribe((res: any) => {
+                if (res != null) {
+                  debugger;
+                  this.componentes = res;
+                  this.proyecto.proFechaPuntualInicial = this.componentes.comFechaInicioFestival;
+                  this.proyecto.proFechaPuntualFinal = this.componentes.comFechaFinalFestival;
+                  alert(this.proyecto.proFechaPuntualInicial);
+                }
+              });
           //this._usuarioService.setCurrentSession(this.session);
           //this.getProyecto(this.proId);
       }
@@ -471,7 +482,7 @@ export class FormularioBComponent implements OnInit {
           //   this.cargarDescripcion(this.proyecto.linId);
           //   this.cargarValoresIndicador(this.proyecto.proId);
           //   this.cargarIndicadoresLinea(this.proyecto.linId);
-          //   this.cargarComponente(this.proyecto.proId);
+           //this.cargarComponente(this.proyecto.proId);
           //   this.cargarCronogramabyProyecto(this.proyecto.proId);
           //   this.cargarActividadesObligatoriasbyProyecto(this.proyecto.proId);
           //   //this.cargarPresupuestoDetalleTipo();
@@ -507,6 +518,7 @@ export class FormularioBComponent implements OnInit {
         if (
           this.proyecto.proFechaPuntualFinal !== null 
         ) {
+          alert("fecha");
           this.proyecto.proFechaPuntualFinal = 
             moment(this.proyecto.proFechaPuntualFinal).format("YYYY-MM-DD")
           
@@ -526,82 +538,17 @@ export class FormularioBComponent implements OnInit {
     }
   
         
-        //   this.fechaInicioProyecto = new Date(
-        //     moment(this.proyecto.proFechaInicial).format("YYYY-MM-DD 23:59:59")
-        //   );
-        //   this.editorOptions.min = this.fechaInicioProyecto;
-        //   this.editorOptions.max = this.fechaFinalProyecto
-        //} 
-        // else {
-        //   this.fechaFinalProyecto = null;
-        //   this.fechaInicioProyecto = null;
-        // }
-        // if (this.listaLineas.length > 0 && this.proyecto.linId) {
-        //   this.configFechasByLinea(this.listaLineas.find(linea => linea.linId === this.proyecto.linId));
-        // }
-      //});
+       
     
   /**
    * Método usado para cargar indicadores
    * @memberof FormularioBComponent
    */
-  // cargarIndicadores() {
-  //   this._administracionService.cargarIndicadores().subscribe((res: any) => {
-  //     this.listaIndicadores = res;
-      
-  //   });
-  // }
 
-  /**
-   * Método usado para cargar indicadores por línea
-   * @param lineaId 
-   */
-  // cargarIndicadoresLinea(lineaId: number) {
-  //   this.listaIndicadoresLinea = [];
-  //   this._administracionService.cargarIndicadorByLinea(lineaId).subscribe((res: any) => {
-  //     res.forEach((il: any) => {
-  //       this.listaIndicadores.forEach(i => {
-  //         this.iniInidcadoresLinea();
-  //         if (il.indId === i.indId) {
-  //           this.indicadoresLinea = il;
-  //           this.indicadoresLinea.indNombre = i.indNombre;
-  //           this.indicadoresLinea.indTipo = i.indTipo;
-  //           if (this.listaValoresIndicador.length > 0) {
-  //             this.listaValoresIndicador.forEach(vi => {
-  //               if (vi.ilId === il.ilId) {
-  //                 this.indicadoresLinea.valValor = vi.valValor === undefined ? null : vi.valValor;
-  //                 this.indicadoresLinea.valValorTexto = (vi.valValorTexto === null || vi.valValorTexto === undefined) ? '' : vi.valValorTexto;;
-  //               }
-  //             });
-  //           } else {
-  //             this.indicadoresLinea.valValor = null;
-  //             this.indicadoresLinea.valValorTexto = '';
-  //           }
-  //           this.listaIndicadoresLinea.push(this.indicadoresLinea);
-  //           this.listaIndicadoresLinea.sort(function (a, b){
-  //             return (a.indOrder - b.indOrder);
-  //           });
-  //         }
-  //       })
-  //     });
-  //   });
-   
-  // }
 
-  /**
-   * Método usado para cargar componentes del proyecto
-   * @param {number} id
-   * @memberof FormularioBComponent
-   */
-  // cargarComponente(id: number) {
-  //   this._formularioService
-  //     .cargarComponentesByProyecto(id)
-  //     .subscribe((res: any) => {
-  //       if (res != null) {
-  //         this.componentes = res;
-  //       }
-  //     });
-  // }
+ 
+
+  
 
   /**
    * Método usado para cargar las líneas
@@ -627,78 +574,8 @@ export class FormularioBComponent implements OnInit {
     });
   }
 
-  /**
-   * Método usado para cargar los temas adjuntados a la línea
-   * @param {*} linId
-   * @memberof FormularioBComponent
-   */
-  // cargarTemasbyLinea(linId: any) {
-  //   this.cargarTemasbyProyecto(this.proId);
-  //   this._administracionService.cargarTemasbyLinea(linId).subscribe(
-  //     (res: any) => {
-  //       this.listaTemas = res;
-  //       if (this.listaTemas.length > 0) {
-  //         this.listaTemas.forEach((item) => {
-  //           if (this.savedTemasbyProyecto.length > 0) {
-  //             this.savedTemasbyProyecto.forEach((i: any) => {
-  //               if (i.temId === item.temId) {
-  //                 item.Checked = true;
-  //               }
-  //             });
-  //           } else {
-  //             item.Checked = false;
-  //           }
-  //         });
-  //         this.mostrarTemas = true;
-  //       } else {
-  //         this.mostrarTemas = false;
-  //       }
-  //     },
-  //     (error) => {
-  //       this.listaTemas = null;
-  //       this.mostrarTemas = false;
-  //     }
-  //   );
-  // }
 
-  // /**
-  //  * Método usado para restringir las fechas dependiendo de la línea
-  //  * @param {string} lineaId
-  //  * @memberof FormularioBComponent
-  //  */
-  // configFechasByLinea(linea: Lineas) {
-  //   if (
-  //     linea.linNombre.includes("L1") ||
-  //     linea.linNombre.includes("L3") ||
-  //     linea.linNombre.includes("L4") ||
-  //     linea.linNombre.includes("L5") ||
-  //     linea.linNombre.includes("L8")
-  //   ) 
-  //   {
-  //     if (linea.linNombre.includes("L3") || linea.linNombre.includes("L4")) {
-  //       this.fechaRestriccionInicioDP1 = new Date(moment("01-01-" + this.year).format("YYYY-MM-DD 00:00:00"));
-  //       this.fechaRestriccionFinalDP1 = new Date(moment("11-05-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //       this.fechaRestriccionInicioDP2 = new Date(moment("01-01-" + this.year).add(linea.linDuracionMinima, 'days').format("YYYY-MM-DD 00:00:00"));
-  //       this.fechaRestriccionFinalDP2 = new Date(moment("11-05-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //     } else {
-  //       this.fechaRestriccionInicioDP1 = new Date(moment("01-01-" + this.year).format("YYYY-MM-DD 00:00:00"));
-  //       this.fechaRestriccionFinalDP1 = new Date(moment("11-05-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //       this.fechaRestriccionInicioDP2 = new Date(moment("01-01-" + this.year).format("YYYY-MM-DD 00:00:00"));
-  //       this.fechaRestriccionFinalDP2 = new Date(moment("11-05-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //     }
-  //   }
-  //   if (
-  //     linea.linNombre.includes("L2") ||
-  //     linea.linNombre.includes("L6") ||
-  //     linea.linNombre.includes("L7")
-  //   ) 
-  //   {
-  //     this.fechaRestriccionInicioDP1 = new Date(moment("01-01-" + this.year).format("YYYY-MM-DD 00:00:00"));
-  //     this.fechaRestriccionFinalDP1 = new Date(moment("12-31-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //     this.fechaRestriccionInicioDP2 = new Date(moment("01-01-" + this.year).add(linea.linDuracionMinima, 'days').format("YYYY-MM-DD 00:00:00"));
-  //     this.fechaRestriccionFinalDP2 = new Date(moment("12-31-" + this.year).format("YYYY-MM-DD 23:59:59"));
-  //   }
-  // }
+
 
 
   /**
@@ -725,172 +602,7 @@ export class FormularioBComponent implements OnInit {
       });
   }
 
-  /**
-   * Método usado para cargar descripción de la línea del proyecto
-   * @param {*} lineaId
-   * @memberof FormularioBComponent
-   */
-  // cargarDescripcion(lineaId: any) {
-  //   if (this.listaLineas.length > 0) {
-  //     this.lineaDescripcion =
-  //       this.listaLineas.find((x) => x.linId == lineaId).linDescripcion !==
-  //         null ||
-  //         this.listaLineas.find((x) => x.linId == lineaId).linDescripcion !==
-  //         undefined
-  //         ? this.listaLineas.find((x) => x.linId == lineaId).linDescripcion
-  //         : "";
-  //     this.lineaSeleccionada =
-  //       this.lineaDescripcion !== "" || this.lineaDescripcion !== undefined
-  //         ? true
-  //         : false;
-  //   }
-  // }
 
-  /**
-   * Método usado para cargar temas por proyecto
-   * @param {*} proId
-   * @memberof FormularioBComponent
-   */
-  // cargarTemasbyProyecto(proId: any) {
-  //   this._formularioService
-  //     .cargarTemasByProyecto(proId)
-  //     .subscribe((res: any) => {
-  //       this.savedTemasbyProyecto = res;
-  //     });
-  // }
-
-  /**
-   * Método usado para cargar las metas del proyecto
-   * @memberof FormularioBComponent
-   */
-  // cargarMetasbyProyecto() {
-  //   this.listaMetas.push(
-  //     new Metas(1, "Meta 1."),
-  //     new Metas(2, "Meta 2."),
-  //     new Metas(3, "Meta 3."),
-  //     new Metas(4, "Meta 4."),
-  //     new Metas(5, "Meta 5."),
-  //     new Metas(6, "Meta 6.")
-  //   );
-  // }
-
-  /**
-   * Método usado para cargar cronograma del proyecto
-   * @param {*} proId
-   * @memberof FormularioBComponent
-   */
-  // cargarCronogramabyProyecto(proId: any) {
-  //   this.listaCronograma = [];
-  //   this._formularioService
-  //     .cargarCronogramaByProyecto(proId)
-  //     .subscribe((res: any) => {
-  //       res.forEach((item) => {
-  //         this.iniCronograma();
-  //         this.cronograma = item;
-  //         this.listaCronograma.push(this.cronograma);
-  //       });
-  //     });
-  // }
-
-  /**
-   * Método usado para cargar actividades obligatorias
-   * @memberof FormularioBComponent
-   */
-  // cargarActividadesObligatorias() {
-  //   this._administracionService
-  //     .cargarActividadesObligatorias()
-  //     .subscribe((res: any) => {
-  //       this.listaActividadesObligatorias = res;
-  //     });
-  // }
-
-  /**
-   * Método usado para cargar actividades obligatorias por proyecto
-   * @param {*} proId
-   * @memberof FormularioBComponent
-   */
-  // cargarActividadesObligatoriasbyProyecto(proId: any) {
-  //   this._formularioService
-  //     .cargarActividadesObligatoriasByProyecto(proId)
-  //     .subscribe((res: any) => {
-  //       this.listaProyectoActividadesObligatorias = res;
-  //       this.listaProyectoActividadesObligatorias.forEach((p) => {
-  //         this.listaActividadesObligatorias.forEach((i) => {
-  //           if (i.actId == p.actId) {
-  //             (i.actFechaFinal = p.actFechaFinal),
-  //               (i.actFechaInicio = p.actFechaInicio);
-  //           }
-  //         });
-  //       });
-  //     });
-  // }
-
-  /**
-   * Método usado para cargar valores indicador
-   * @param {*} proId
-   * @memberof FormularioBComponent
-   */
-  // cargarValoresIndicador(proId: any) {
-  //   this._formularioService.cargarValoresIndicador(proId).subscribe((res: any) => {
-      
-  //     this.listaValoresIndicador = res;
-  //   });
-  // }
-
-  // cargarIndicadoresLineaCategoriaMunicipio(){
-  //   this._administracionService.cargarInidicadoresLineaMunicipioCategoria().subscribe((res: any) => {
-  //     this.listaILMC = res;
-  //   });
-  // }
-
-
-  // cargarValoresIndicadoresLineaCategoriaMunicipio(proId: any){
-  //   this.listaIndicadoresLineaMunicipioCategoria = [];
-  //   let zonCategoria = this.listaMunicipios.find(m => m['zonId'] === this.proyecto.zonId)['zonCategoria'];
-  //   this._formularioService.cargarValoresIndicadoresCategoriaMunicipio(proId).subscribe((res: any) => {
-  //     if (this.proyecto.linId === 5 || this.proyecto.linId === 6) {
-  //       if (zonCategoria === '4' || zonCategoria === '5' || zonCategoria === '6') {
-  //         res.forEach(vilcm => {
-  //           this.listaILMC.forEach(ilcm => {
-  //             this.listaIndicadores.forEach(ind => {
-  //               if (ilcm.ilcmId === vilcm.ilcmId && ilcm.indId === ind.indId && ilcm.linId === this.proyecto.linId) {
-  //                 this.iniIndicadoresLineaCategoriaMunicipio();
-  //                 this.indicadoresLineaCategoriaMunicipio.ilcmId = vilcm.ilcmId;
-  //                 this.indicadoresLineaCategoriaMunicipio.idZonCategoria = ilcm.idZonCategoria;
-  //                 this.indicadoresLineaCategoriaMunicipio.indId = ilcm.indId;
-  //                 this.indicadoresLineaCategoriaMunicipio.indNombre = ind.indNombre;
-  //                 this.indicadoresLineaCategoriaMunicipio.indTipo = ind.indTipo;
-  //                 this.indicadoresLineaCategoriaMunicipio.ilmOrder = ilcm.ilmOrder;
-  //                 this.indicadoresLineaCategoriaMunicipio.valValor = vilcm.valValor;
-  //                 this.indicadoresLineaCategoriaMunicipio.valValorTexto = (vilcm.valValorTexto === null || vilcm.valValorTexto === undefined) ? '' : vilcm.valValorTexto;
-
-  //                 this.listaIndicadoresLineaMunicipioCategoria.push(this.indicadoresLineaCategoriaMunicipio);
-  //                 this.listaIndicadoresLineaMunicipioCategoria.sort(function (a, b) {
-  //                   return (a.ilmOrder - b.ilmOrder);
-  //                 });
-  //               }
-  //             });
-  //           });
-  //         });
-  //         if (this.listaIndicadoresLineaMunicipioCategoria.length === 0) {
-  //           this.showIndicadoresLineaCategoriaMunicipio(this.proyecto.zonId);
-  //         } else {
-  //           // cambiar radio button  value true
-  //           this.flagIncentivos = true;
-  //           this.checkedRB = false;
-  //           this.flagShowIncentivos = false;
-  //         }
-  //       }else{
-  //         this.flagIncentivos = false;
-  //         this.checkedRB = false;
-  //         this.flagShowIncentivos = false;
-  //       }
-  //     } else {
-  //       this.flagIncentivos = false;
-  //       this.flagShowIncentivos = false;
-  //       }
-  //     });
-  // }
 
   /**
    * Evento de selección del departamento
@@ -900,41 +612,7 @@ export class FormularioBComponent implements OnInit {
     this.cargarMunicipios(this.proyecto.zonDepId);
   }
 
-  // changeRB(e: boolean){
-  //   if (e === true) {
-  //     this.flagShowIncentivos = true;
-  //     this.checkedRB = true;
-  //   }else{
-  //     this.flagShowIncentivos = false;
-  //     this.checkedRB = false;
-  //   }
-    
-  // }
-
-  // showIndicadoresLineaCategoriaMunicipio(zonId: string){
-  //   this.listaIndicadoresLineaMunicipioCategoria = [];
-  //   let zonCategoria = this.listaMunicipios.find( m => m['zonId'] === zonId)['zonCategoria'];
-
-  //   if (this.proyecto.linId !== null && this.proyecto.linId !== undefined) {
-  //     if (this.proyecto.linId === 5 || this.proyecto.linId === 6) {
-  //         if(zonCategoria === '4' || zonCategoria === '5' || zonCategoria === '6'){
-  //           this.listaIndicadoresLineaMunicipioCategoria = this.listaILMC.filter(x => x.linId === this.proyecto.linId && x.idZonCategoria == zonCategoria)
-  //           this.listaIndicadores.forEach(i => {
-  //             this.listaIndicadoresLineaMunicipioCategoria.forEach(ilcm => {
-  //               if (i.indId === ilcm.indId) {
-  //                 ilcm.indNombre = i.indNombre;
-  //                 ilcm.indTipo = i.indTipo;
-  //                 ilcm.valValorTexto = '';
-  //               }
-  //             });
-  //           });
-  //         }
-  //         this.flagIncentivos = true;
-  //         this.checkedRB = false;
-  //       }
-  //     } 
-  //     this.flagShowIncentivos = false;
-  // }
+ 
 
   changeMunicipio(e: any) {
     //let zonId = e.split(' ')[1];
@@ -942,92 +620,6 @@ export class FormularioBComponent implements OnInit {
     this.cargarValoresIndicadoresLineaCategoriaMunicipio(this.proId);
   }
 
-  /**
-   * Evento de selección de línea
-   * @memberof FormularioBComponent
-   */
-  // changeLinea() {
-  //   if (this.proyecto.linId !== null && this.proyecto.linId !== undefined) {
-  //     this.cargarDescripcion(this.proyecto.linId);
-  //     this.cargarTemasbyLinea(this.proyecto.linId);
-  //     this.cargarIndicadoresLinea(this.proyecto.linId);
-  //     if (this.proyecto.linId !== 5 && this.proyecto.linId !== 6) {
-  //       this.flagIncentivos = false;
-  //       this.flagShowIncentivos = false;
-  //       this.checkedRB = false;
-  //     } else {
-  //       // this.showIndicadoresLineaCategoriaMunicipio(this.proyecto.zonId);
-  //       this.cargarValoresIndicadoresLineaCategoriaMunicipio(this.proId);
-  //     }
-  //   }
-  //     if (this.listaLineas.length > 0) {
-  //       this.configFechasByLinea(this.listaLineas.find(linea => linea.linId === this.proyecto.linId));
-  //     }
-  // }
-
-  /**
-   * Evento de selección de área temática
-   * @param {*} e
-   * @memberof FormularioBComponent
-   */
-  // changeTagBox(e: any) {
-  //   if (e.value.length <= 4) {
-  //     this.proyecto.areId = e.value[0];
-  //     this.proyecto.areaId1 = e.value[1] !== undefined ? e.value[1] : null;
-  //     this.proyecto.areaId2 = e.value[2] !== undefined ? e.value[2] : null;
-  //     this.proyecto.areaId3 = e.value[3] !== undefined ? e.value[3] : null;
-  //     this.checklengthTemas = true;
-  //   } else {
-  //     this.checklengthTemas = false;
-  //   }
-  // }
-
-  /**
-   * Evento selección de temas
-   * @param {*} e
-   * @memberof FormularioBComponent
-   */
-  // changeCheckbox(e: any) {
-  //   this.listaTemas.forEach((item) => {
-  //     if (item.temId == e.target.value) {
-  //       item.Checked = !item.Checked;
-  //     }
-  //   });
-  // }
-
-  /**
-   *Evento selección fecha inicial del proyecto
-   * @param {*} e
-   * @memberof FormularioBComponent
-   */
-  // changeDateBoxInicial(e: any) {
-  //   let linea = this.listaLineas.find(linea => linea.linId === this.proyecto.linId);
-  //   if (moment(this.fechaRestriccionFinalDP2).diff(moment(new Date(e.value)), 'days') < linea.linDuracionMinima) {
-  //     this.dbisValidFecha = false;
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Fechas del proyecto",
-  //       text:
-  //         "Fecha del proyecto no cumple con el tiempo establecido para la ejecución. Tiempo en días: " + moment(this.fechaRestriccionFinalDP2).diff(moment(new Date(e.value)), 'days'),
-  //     });
-  //   } else {
-  //     this.dbisValidFecha = true;
-  //     this.fechaInicioProyecto = new Date(e.value);
-  //     this.editorOptions.min = this.fechaInicioProyecto;
-  //     this.fechaRestriccionInicioDP2 = new Date(moment(new Date(e.value)).add(linea.linDuracionMinima, 'days').format("YYYY-MM-DD 00:00:00"));
-  //     this.editorOptions.min = this.fechaInicioProyecto;
-  //   }
-  // }
-
-  /**
-   * Evento selección de fecha final de proyecto
-   * @param {*} e
-   * @memberof FormularioBComponent
-   */
-  // changeDateBoxFinal(e: any) {
-  //   this.fechaFinalProyecto = new Date(e.value);
-  //   this.editorOptions.max = this.fechaFinalProyecto;
-  // }
 
   /**
    * Evento guardar proyecto

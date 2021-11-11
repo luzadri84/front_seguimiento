@@ -66,7 +66,7 @@ import { ErrorInterceptor } from '../login/error.interceptor'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormularioBComponent } from './formulariob/formulariob.component';
 import { ActualizacionComponent } from './actualizacion/actualizacion.component';
-//import { DocumentosComponent } from './documentos/documentos.component';
+import { DocumentosComponent } from './documentos/documentos.component';
 //import { EnviarComponent } from './enviar/enviar.component';
 
 @Injectable()
@@ -158,7 +158,7 @@ export class NgbUTCStringAdapter extends NgbDateAdapter<string> {
         FormularioBComponent,
         ActualizacionComponent,
         
-        //DocumentosComponent,
+        DocumentosComponent,
         //EnviarComponent
     ],
     exports: [
