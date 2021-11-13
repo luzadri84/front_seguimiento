@@ -2,7 +2,6 @@
     <div class="row" style="padding: 1%;">
         <div class="card">
             <div class="card-body">
-                <h4 style="text-align: justify;">Adjunte los documentos solicitados a continuación, recuerde que solo se permiten archivos con las siguientes extensiones (.jpg, .jpeg, .jpg, .png, .pdf, .doc, .docx) y el peso no puede ser mayor a 20MB.</h4>
                 <hr>
                 <dx-data-grid id="gridContainer" [dataSource]="appDocumentosTipoEntidades" keyExpr="tdoId"
                     [wordWrapEnabled]="true" [showBorders]="true" [showColumnLines]="true" [showRowLines]="true"
@@ -16,20 +15,7 @@
                     <dxi-column dataField="tdoObservaciones" caption="Cargue" [allowSorting]="false"
                         cellTemplate="cellTemplateItem">
                         <div *dxTemplate="let datosItem of 'cellTemplateItem'">
-                            <!--<input name="numPaginas" type="number"  class="form-control" style="width: 70px;" [(ngModel)]="datosItem.data.numeroActualPaginas"  minlength="1"  maxlength="3">
-                             <div class="main-block">
-                                <div class="file-uploader-block" *ngIf="datosItem.data.numeroActualPaginas > 0">
-                                    <dx-file-uploader (onUploaded)="changeFile()" [(uploadUrl)]="uploadUrl"
-                                        [uploadHeaders]="headers" [multiple]="false" uploadMode="instantly"
-                                        (onValueChanged)="onValueChanged($event, datosItem.data.tdoId, datosItem.data.tdvNombre, datosItem.data.numeroActualPaginas)"
-                                        labelText="" selectButtonText="Seleccione el archivo" name="file"
-                                        [allowedFileExtensions]="['.jpg', '.jpeg', '.jpg', '.png', '.pdf', '.doc', '.docx']"
-                                        [maxFileSize]="1048576" invalidFileExtensionMessage="Extensión invalida"
-                                        invalidMaxFileSizeMessage="Excede el máximo permitido" uploadFailedMessage = "Hubo una falla en el cargue " >
-                                    </dx-file-uploader>
-                                </div>
-                            </div> 
-                            <hr>-->
+                           
                             <div [style.display]="ocultar(datosItem.data.tdvRutaAdjunto)">
                                 <a href="javascript:void(0);" (click)="descargar(datosItem.data.tdvNombre);">
                                     <dx-button icon="download" text="">
@@ -47,7 +33,18 @@
                     <dxi-column dataField="tdoNs" caption="Tipo">
                     </dxi-column>
                 </dx-data-grid>
+                <hr>
+               
             </div>
         </div>    
     </div>
 </div>
+
+    <div class="label" style="font-size: 16px;">
+        <a href="javascript:void(0);" (click)="descargarZip();">
+            <dx-button icon="download" text="">
+            </dx-button>
+            Descargar todos los documentos en un .zip
+        </a>
+    </div>
+    

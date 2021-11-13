@@ -15,6 +15,8 @@ export class SidebarComponent implements OnInit {
   role: string;
   currentSession: Session;
   public proId: any;
+  public vigenciaFutura: any;
+  
 
   constructor(private router: Router, private route: ActivatedRoute, public _usuarioService: UsuarioService) {
   }

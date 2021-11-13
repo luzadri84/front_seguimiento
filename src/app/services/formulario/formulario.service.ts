@@ -151,6 +151,11 @@ export class FormularioService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
+  DescargarDocumentoZip(idPro: number): Observable<Blob> {
+    const url = environment.URL_API + 'parametria/documentos/'+ idPro +'/descargarZip';
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   GetAppResultado(idVigencia: number, depId: string, munId: string , proyecto: string , proponente: string, nroRadicacion: string): Observable<any>{
     const url = environment.URL_API + 'parametria/proyecto/'+idVigencia+'/'+ depId+'/'+ munId+'/'+ proyecto+'/'+ proponente+'/'+ proponente +'/resultado' ;
     return this.http.get(url, {headers:{skip:"true"}});

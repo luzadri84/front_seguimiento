@@ -167,7 +167,7 @@ export class ProyectoSeguimiento {
          proFechaPuntualFinal: string;
 
          proUsuarioAsignado: number;
-         zonaId: number;
+         vigenciaFutura: number;
          proFechaEntregadoSupervisor: string;
          proFechaProrroga: string;
          proEstadoSeguimiento: number;
@@ -175,7 +175,6 @@ export class ProyectoSeguimiento {
          proFechaRadicacionSeguimiento: string;
          proCuentasPagar: number;
          proEstadoObservaciones: string;
-        
     
 }
 
@@ -521,6 +520,8 @@ export class Resultado
     liN_NOMBRE: string;
     ubicacion: string;
     area:string;
+    diferencia: number;
+    vigenciaFutura: number;
 }  
 
 

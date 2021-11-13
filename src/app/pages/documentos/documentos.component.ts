@@ -27,6 +27,8 @@ export class DocumentosComponent implements OnInit {
   appDocumentosTipoEntidades: AppDocumentosTipoEntidades[];
   prodId: any;
   headers: any;
+  enableAllDoc: boolean = false;
+  public loadingVisible: boolean = false;
 
   constructor(
     public _formularioService: FormularioService,
@@ -36,7 +38,6 @@ export class DocumentosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Se obtiene el proId de la ruta
     this.route.queryParamMap.subscribe((params) => {
       this.prodId = params.get("proId");
     });
@@ -56,7 +57,7 @@ export class DocumentosComponent implements OnInit {
       null,
       null,
       '2020-12-24',
-      null
+      null,null
     );
     let session: Session = this._usuarioService.getCurrentSession();
     this.headers = { 'Authorization': 'Bearer ' + session.access_token };
@@ -64,14 +65,8 @@ export class DocumentosComponent implements OnInit {
       this.prodId = session.proId;
       this.getProyecto(this.prodId);
       this.cargarDocumentosTipoEntidades(this.prodId);
-    } else {
-      Swal.fire(
-        "Importante",
-        "Seleccione el proyecto que desea trabajar",
-        "info"
-      );
-      this.router.navigate(["/dashboard"]);
-    }
+    } 
+    
   }
 
   getProyecto(id: number) {
@@ -162,6 +157,35 @@ export class DocumentosComponent implements OnInit {
               text: 'Error al intentar descargar el documento!',
             })
           }
+        }
+      );
+  }
+
+
+  descargarZip() {
+    this.enableAllDoc = true;
+    this._formularioService
+      .DescargarDocumentoZip(this.prodId)
+      .subscribe(
+        (resultBlob: Blob) => {
+          alert(this.proyecto.proNumeroRadicacion);
+          this.loadingVisible = false;
+          const downloadURL = URL.createObjectURL(resultBlob);
+          const link = document.createElement('a');
+          link.href = downloadURL;
+          link.download = 'Proyecto_' + this.proyecto.proNumeroRadicacion.toString();
+          link.click();
+          this.enableAllDoc = false;
+        },
+        (error: any) => {
+          if (error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops..',
+              text: 'Error al intentar descargar el documento!',
+            });
+          }
+          this.enableAllDoc = false;
         }
       );
   }

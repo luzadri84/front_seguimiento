@@ -79,13 +79,6 @@
                 </div>
             </div>
            
-            <div class='row'>
-                <div class="col-12">&nbsp; </div>
-            </div>
-
-
-
-
 
 <!-- <dx-button
         stylingMode="contained"
@@ -127,16 +120,6 @@
                 </a>
             </div>
         </div>
-
-        <div class='row' id="divForm">
-            <div class="col-sm-12 text-center">
-                
-                <a [routerLink]="['/seguimiento']">
-                    <button class="btn btn-primary" 
-                        type="button">Seguimiento</button>
-                </a>
-            </div>
-        </div>
 <br/>
 <br/>
 
@@ -157,31 +140,41 @@
                 <dxi-column  dataField="Editar"  [width]="100" caption="Editar" alignment="center"  cellTemplate="cellTemplate1">
                     <div *dxTemplate="let data of 'cellTemplate1'">
                         <div>
-                            <ul>
-                                <li>
-                                    <a [routerLink]="['/formulario']" [queryParams]="{proId:data.data.iD_PROPONENTE}">
-                                        <button class="btn btn-primary"
-                                            type="button">{{data.data.prO_ID}}
-                                        </button>
-                                    </a>
-                                 </li>
-                            </ul>
+                            <a [routerLink]="['/formulario']" [queryParams]="{proId:data.data.iD_PROPONENTE, vigenciaFutura:data.data.vigenciaFutura}">
+                                <button class="btn btn-primary"
+                                    type="button">Editar
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </dxi-column>
                 <dxi-column  dataField="Seguimiento"  [width]="100" caption="Seguimiento" alignment="center"  cellTemplate="cellTemplate">
                     <div *dxTemplate="let data of 'cellTemplate'">
                         <div>
-                            <ul>
-                                <li>
-                                    <a [routerLink]="['/seguimiento']" [queryParams]="{proId:data.data.prO_ID}">
-                                        <button class="btn btn-primary"
-                                            type="button">{{data.data.prO_ID}}
-                                        </button>
-                                    </a>
-                                 </li>
-                            </ul>
+                            <a [routerLink]="['/seguimiento']" [queryParams]="{proId:data.data.prO_ID}">
+                                <button class="btn btn-primary"
+                                    type="button">Seguimiento
+                                </button>
+                            </a>
                         </div>
+                    </div>
+                </dxi-column>
+
+                <dxi-column  dataField="Semaforo"  [width]="100" caption="Estado" alignment="center"  cellTemplate="cellTemplateS">
+                    <div *dxTemplate="let data of 'cellTemplateS'">
+                        <div *ngIf="data.data.diferencia === 1">
+                        <img  src="assets/Icons/SemaforoRojo.png" width="20px"
+                            alt="lista verificación contenido">
+                        </div>
+                        <div *ngIf="data.data.diferencia === 2">
+                        <img src="assets/Icons/SemaforoAmarillo.png" width="20px"
+                            alt="lista verificación contenido">
+                        </div>
+                        <div *ngIf="data.data.diferencia === 0">
+                        <img  src="assets/Icons/SemaforoVerde.png" width="20px"
+                            alt="lista verificación contenido">
+                        </div>
+                       
                     </div>
                 </dxi-column>
                         

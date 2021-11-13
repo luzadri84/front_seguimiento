@@ -17,5 +17,6 @@ export class Proyecto {
         public usuModifico: string,
         public fecCreo: string,
         public fecModifico: string,
+        public proNumeroRadicacion: string
     ){}
 }

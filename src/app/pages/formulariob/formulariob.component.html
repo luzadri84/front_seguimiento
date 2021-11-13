@@ -44,12 +44,8 @@
                         <div class="col-md-4" style="text-align: justify;"> Año Proyectado
                         </div>
                         <div class="col-md-8">
-                            <select name="vigId" class="form-control" [(ngModel)]="proyecto.vigId"  
-                                required>
-                                <option *ngFor="let item of vigencia" [ngValue]="item.vigId">
-                                    {{item.vigNombre}}
-                                </option>
-                            </select>
+                            <input name="vigenciaFutura" type="text" class="form-control"
+                                [(ngModel)]="proyecto.vigenciaFutura" required>
                         </div>
                     </div>
 
@@ -92,7 +88,7 @@
                         </div>
                         <div class="col-md-8">
                             <input name="proFechaLegalizacion" type="date" class="form-control"
-                                 required>
+                            [(ngModel)]="proyecto.proFechaLegalizacion"  required>
                         </div>
                     </div>
                     <br />

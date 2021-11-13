@@ -20,6 +20,7 @@ import { environment } from '../../../environments/environment'
 export class FormularioComponent implements OnInit {
     public _currentUser: CuentaUsuario;
     public proId: any;
+    public vigenciaFutura: any;
     public existeProyecto: boolean;
     listDepartamentos: Array<any>;
     listMunicipios: Array<any>;
@@ -44,16 +45,20 @@ export class FormularioComponent implements OnInit {
     }
 
     ngOnInit() {
-        //Get usuario en session
-        //this._currentUser = this._usuarioService.getCurrentUser();
-        //Get id proyecto
         let session: Session = this._usuarioService.getCurrentSession();
         this.route.queryParamMap.subscribe((params) => {
             this.proId = params.get("proId");
+            this.vigenciaFutura = params.get("vigenciaFutura");
                 if(this.proId == null)
                 {
                     session.proId = null;
                 }
+                if(session.vigenciaFutura == null)
+                {
+                    session.vigenciaFutura = this.vigenciaFutura;
+                    
+                }
+
             }
 
             
@@ -68,18 +73,11 @@ export class FormularioComponent implements OnInit {
         this.existeProyecto = true;
         } else {
         if (session.proId !== null && session.proId !== undefined) {
+            
             this.proId = session.proId;
             this.getProponente(this.proId);
             this.existeProyecto = true;
         } 
-        // else {
-        //     Swal.fire(
-        //     "Importante",
-        //     "No ha ingresado la información del proponente",
-        //     "info"
-        //     );
-        //     this.router.navigate(["/formulario"]);
-        // }
         }
         
         //Listas
@@ -88,68 +86,7 @@ export class FormularioComponent implements OnInit {
         this.cargarDepartamentosPro();
         this.cargarDepartamentosBanco();
         this.cargarEntFinancieras();
-        //Inicializar proponente
-        // this.proponente = new Proponente(
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     '2020-12-24',
-        //     null,
-        //     new TiposEntidades(null, null, null, null, 0, '2020-12-24', ''),
-        //     []);
-        // this.proyecto = new Proyecto(
-        //     this.proId,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     null,
-        //     '2020-12-24',
-        //     null
-        // );
-       //this.getProponente(Number(this._currentUser.personaid));
        
-       //this.getProponente(this.proId);
     }
     cargarTiposEntidad() {
         this.loadingVisible = true;

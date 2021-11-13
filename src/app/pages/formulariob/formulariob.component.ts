@@ -39,7 +39,7 @@ import {
 } from '../../models/formulariob.model';
 import { AdministracionService } from '../../services/administracion/administracion.service';
 import { FormularioService } from '../../services/formulario/formulario.service';
-import { threadId } from 'worker_threads';
+//import { threadId } from 'worker_threads';
 
 
 @Component({
@@ -55,50 +55,16 @@ export class FormularioBComponent implements OnInit {
   listaLineas: Lineas[] = [];
   listaAreas: Areas[] = [];
   listaTemas: Temas[] = [];
-  //listaCronograma: Cronograma[] = [];
   listaDepartamentos: Departamentos[] = [];
   listaMunicipios: Municipios[] = [];
-  //listaMetas: Metas[] = [];
-  //listaIndicadores: Indicadores[] = [];
-  //listaIndicadoresLinea: IndicadoresbyLinea[] = [];
-  //listaValoresIndicador: ValoresIndicador[] = [];
-  //listaProyectoValoresIndicador: ValoresIndicador[] = [];
-  //listaProyectoActividadesObligatorias: ProyectoActividadesObligatorias[] = [];
-  //listaActividadesObligatorias: ActividadesObligatorias[] = [];
-  //listaIndicadoresLineaMunicipioCategoria: IndicadorLineaCategoriaMunicipio[] = [];
-  //listaValoresIndicadoresLineaCategoriaMunicipio: ValoresIndicadorLineaCategioriaMunicipio [] = [];
-
-  //estadoTemasbyProyecto: TemasbyProyectos[] = [];
-  //savedTemasbyProyecto: TemasbyProyectos[] = [];
-  //partesProyecto: any[] = [];
+ 
   itemsArea = [];
   linea: Lineas;
   dataArea: ArrayStore;
   lineaDescripcion: string;
-  // formInfoProyecto: FormInfoProyecto;
-  // formTrayectoria: FormTrayectoria;
-  // formCompProyecto: FormCompProyecto;
-  // formPresupuesto: FormPresupuesto;
   componentes: Componentes;
-  //cronograma: Cronograma;
-  //proyectoActividadesObligatorias: ProyectoActividadesObligatorias;
-  //actividadesObligatorias: ActividadesObligatorias;
-  //indicadoresLinea: IndicadoresbyLinea;
-  //valoresIndicadores: ValoresIndicador;
-  //indicadoresLineaCategoriaMunicipio: IndicadorLineaCategoriaMunicipio;
-  //valoresIndicadoresLineaCategoriaMunicipio: ValoresIndicadorLineaCategioriaMunicipio;
-
-  //temasbyproyecto: TemasbyProyectos;
   proyecto: ProyectoSeguimiento = new ProyectoSeguimiento();
-  //temas: Temas;
-  //metas: Metas;
-  //formularioB: FormularioB;
 
-  // lineaSeleccionada = false;
-  // mostrarTemas: boolean = false;
-  // proExiste: boolean = false;
-  // proFechasExiste: boolean = false;
-  // checklengthTemas: boolean = true;
   fechaInicioProyecto: Date;
   // fechaFinalProyecto: Date;
   // fechaRestriccionInicioDP1: Date;
@@ -164,39 +130,21 @@ export class FormularioBComponent implements OnInit {
     Globalize.loadMessages(esMessages);
     Globalize.locale(navigator.language);
     
-    // this.iniFormInfoProyecto();
-    // this.iniFormTrayectoria();
-    // this.iniFormCompProyecto();
-    // this.iniPresupuesto();
     this.fechaInicioProyecto = null;
-    // this.fechaFinalProyecto = null;
 
     this.year = new Date().getFullYear();
 
-    // this.editorOptions = new editorOptions(
-    //   this.fechaInicioProyecto,
-    //   this.fechaFinalProyecto
-    // );
+  
   }
 
   ngOnInit() {
     this.iniProyecto();
-    //this.iniComponentes();
-    //this.iniCronograma();
-    //this.iniTemas();
-    //this.iniValoresIndicador();
-    //this.iniValoresInidicadoresLineaCategoriaMunicipio();
+   
     
     this.cargarDepartamentos();
     this.cargarLineas();
     this.cargarAreas();
-    //this.cargarMetasbyProyecto();
-    //this.cargarActividadesObligatorias();
-    //this.cargarLineas();
-    //this.cargarTrayectoria();
-    //this.cargarTipoTrayectoria();
-    //this.cargarIndicadores();
-    //this.cargarIndicadoresLineaCategoriaMunicipio();
+
 
     this._formularioService.GetVigencia().subscribe((res) => {
       this.vigencia = res;
@@ -205,10 +153,11 @@ export class FormularioBComponent implements OnInit {
     // Se obtiene el proId de la ruta
     this.route.queryParamMap.subscribe((params) => {
       this.proId = params.get("proId");
-      //alert("parametro " + this.proId);
     });
 
     let session: Session = this._usuarioService.getCurrentSession();
+    
+
     if (this.proId !== null) {
       this.getProyecto(this.proId);
       this.permiteedicion = session.user.perfilesCuentausuario[0].perfil.permiteeditar; 
@@ -228,48 +177,9 @@ export class FormularioBComponent implements OnInit {
         this.router.navigate(["/formulario"]);
       }
     }
-    // this.partesProyecto.push(
-    //   this.formInfoProyecto,
-    //   //this.formTrayectoria,
-    //   //this.formCompProyecto,
-    //   //this.formPresupuesto
-    // );
-
-    //this.appBeneficiarios.benCaracteristicasPoblacion = '';
-    //this.appBeneficiarios.benOtrasPersonasBeneficiadasDescripcion = '';
   }
 
-  // #region Inicializar formularios parciales
-  // iniFormInfoProyecto() {
-  //   this.formInfoProyecto = {
-  //     index: 0,
-  //     NombreTituloPaso: "Información del proyecto",
-  //   };
-  // }
-
-  // iniFormTrayectoria() {
-  //   this.formTrayectoria = {
-  //     index: 1,
-  //     NombreTituloPaso: "Trayectoria",
-  //   };
-  // }
-
-  // iniFormCompProyecto() {
-  //   this.formCompProyecto = {
-  //     index: 2,
-  //     NombreTituloPaso: "Componentes del proyecto",
-  //   };
-  // }
-
-  // iniPresupuesto() {
-  //   this.formPresupuesto = {
-  //     index: 3,
-  //     NombreTituloPaso: "Presupuesto",
-  //   };
-  // }
-
-  //#endregion
-
+  
   // #region Inicializar objetos
    iniProyecto() {
     this.proyecto.proId = 0;
@@ -294,133 +204,7 @@ export class FormularioBComponent implements OnInit {
     this.proyecto.proFechaPuntualFinal= "";
   }
 
-  // iniTemas() {
-  //   this.temas = new Temas(null, null, null, false);
-  // }
-
-  // iniTemasProyecto() {
-  //   this.temasbyproyecto = new TemasbyProyectos(null, this.proId);
-  // }
-
-  // iniComponentes() {
-  //   this.componentes = new Componentes(
-  //     this.proId,
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "2020-12-24",
-  //     "2020-12-24"
-  //   );
-  // }
-
-  // iniCronograma() {
-  //   this.cronograma = new Cronograma(
-  //     null,
-  //     "",
-  //     "",
-  //     this.proId,
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "2020-12-24",
-  //     "2020-12-24"
-  //   );
-  // }
-
-  // iniActividadesObligatorias() {
-  //   this.actividadesObligatorias = new ActividadesObligatorias(
-  //     null,
-  //     "",
-  //     "",
-  //     ""
-  //   );
-  // }
-
-  // iniProyectoActividadesObligatorias() {
-  //   this.proyectoActividadesObligatorias = new ProyectoActividadesObligatorias(
-  //     null,
-  //     this.proId,
-  //     null,
-  //     "",
-  //     "",
-  //     "",
-  //     "",
-  //     "2020-12-24",
-  //     ""
-  //   );
-  // }
-
-  // iniInidcadoresLinea() {
-  //   this.indicadoresLinea = new IndicadoresbyLinea(
-  //     null,
-  //     null,
-  //     null,
-  //     '',
-  //     null,
-  //     null,
-  //     null,
-  //     ''
-  //   );
-  // }
-
-  // iniValoresIndicador() {
-  //   this.valoresIndicadores = new ValoresIndicador(
-  //     null,
-  //     null,
-  //     this.proId,
-  //     null,
-  //     '',
-  //     '',
-  //     '',
-  //     '2020-12-24',
-  //     null
-
-  //   );
-  // }
-
-  // iniIndicadoresLineaCategoriaMunicipio() {
-  //   this.indicadoresLineaCategoriaMunicipio = new IndicadorLineaCategoriaMunicipio(
-  //     null,
-  //     null,
-  //     null,
-  //     null,
-  //     '',
-  //     null,
-  //     null,
-  //     null,
-  //     '',
-  //     '',
-  //     '',
-  //     '2020-12-24',
-  //     ''
-  //   );
-  // }
-
-  // iniValoresInidicadoresLineaCategoriaMunicipio() {
-  //   this.valoresIndicadoresLineaCategoriaMunicipio = new ValoresIndicadorLineaCategioriaMunicipio(
-  //     null,
-  //     null,
-  //     null,
-  //     null,
-  //     '',
-  //     '',
-  //     '',
-  //     '2020-12-24',
-  //     ''
-  //   );
-
-  // }
-
-  //#endregion
+ 
 
   /**
    * Método usado para cargar proyecto por Id
@@ -435,6 +219,7 @@ export class FormularioBComponent implements OnInit {
       .subscribe((res: ProyectoSeguimiento) => {
         this.proyecto = res;
         let session : Session = this._usuarioService.getCurrentSession();
+        this.proyecto.vigenciaFutura = session.vigenciaFutura;
         if(id !== null) {
           this.existeProyecto = true;
           session.proId = this.proId;
@@ -442,56 +227,16 @@ export class FormularioBComponent implements OnInit {
               .cargarComponentesByProyecto(id)
               .subscribe((res: any) => {
                 if (res != null) {
-                  debugger;
                   this.componentes = res;
                   this.proyecto.proFechaPuntualInicial = this.componentes.comFechaInicioFestival;
                   this.proyecto.proFechaPuntualFinal = this.componentes.comFechaFinalFestival;
-                  alert(this.proyecto.proFechaPuntualInicial);
                 }
               });
-          //this._usuarioService.setCurrentSession(this.session);
-          //this.getProyecto(this.proId);
       }
-        // if (this.proyecto.proEstado === 'E') {
-        //   Swal.fire(
-        //     'Importante',
-        //     'El proyecto se encuentra en estado envíado!',
-        //     'info'
-        //   );
-        //   this.router.navigate(['/dashboard']);
-        // }
-        //alert("proyecto2" + this.proyecto.proIdProponente);
+      
         if (this.proyecto.zonId !== null) {
-          //this.itemsArea = new Array();
-          // if (this.proyecto.areId !== null) {
-          //   this.itemsArea.push(this.proyecto.areId);
-          // }
-          // if (this.proyecto.areaId1 !== null) {
-          //   this.itemsArea.push(this.proyecto.areaId1);
-          // }
-          // if (this.proyecto.areaId2 !== null) {
-          //   this.itemsArea.push(this.proyecto.areaId2);
-          // }
-          // if (this.proyecto.areaId3 !== null) {
-          //   this.itemsArea.push(this.proyecto.areaId3);
-          // }
           this.cargarMunicipios(this.proyecto.zonDepId);
-
-          // if (this.proyecto.linId !== null) {
-          //   this.cargarTemasbyLinea(this.proyecto.linId);
-          //   this.cargarDescripcion(this.proyecto.linId);
-          //   this.cargarValoresIndicador(this.proyecto.proId);
-          //   this.cargarIndicadoresLinea(this.proyecto.linId);
-           //this.cargarComponente(this.proyecto.proId);
-          //   this.cargarCronogramabyProyecto(this.proyecto.proId);
-          //   this.cargarActividadesObligatoriasbyProyecto(this.proyecto.proId);
-          //   //this.cargarPresupuestoDetalleTipo();
-          //   this.cargarPresupuestoDetalle(this.proyecto.proId);
-          //   this.cargarBeneficiados(this.proyecto.proId);
-          // }
-          
         }
-        // Cargando fechas del proyecto
 
          
         if (
@@ -518,7 +263,7 @@ export class FormularioBComponent implements OnInit {
         if (
           this.proyecto.proFechaPuntualFinal !== null 
         ) {
-          alert("fecha");
+          //alert("fecha");
           this.proyecto.proFechaPuntualFinal = 
             moment(this.proyecto.proFechaPuntualFinal).format("YYYY-MM-DD")
           
@@ -537,18 +282,7 @@ export class FormularioBComponent implements OnInit {
       } );
     }
   
-        
        
-    
-  /**
-   * Método usado para cargar indicadores
-   * @memberof FormularioBComponent
-   */
-
-
- 
-
-  
 
   /**
    * Método usado para cargar las líneas
@@ -645,11 +379,6 @@ export class FormularioBComponent implements OnInit {
           if (result.resultado) {
             Swal.fire("Información Proyecto", "La información del proyecto que almacenada!", "success");
             this.proyecto.proId = result.id;
-            //this.estadoTemasbyProyecto = [];
-           //this.listaValoresIndicadoresLineaCategoriaMunicipio = [];
-            //this.checkedRB = false;
-            //this.flagIncentivos = true;
-            //this.flagShowIncentivos = false;
             this.getProyecto(this.proId);
           } else {
             Swal.fire({
